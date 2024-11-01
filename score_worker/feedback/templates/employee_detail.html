@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ employee.name }} - Details</title>
+</head>
+<body>
+    <h1>{{ employee.name }}</h1>
+    <p><strong>Department:</strong> {{ employee.department }}</p>
+    <p><strong>Average Rating:</strong> {{ employee.average_rating }}</p>
+    <p><strong>Feedback Summary:</strong> {{ employee.summary }}</p>
+
+    <a href="{% url 'add_feedback' employee.id %}">Leave Feedback</a>
+</body>
+</html>
