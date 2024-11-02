@@ -68,11 +68,11 @@ def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> D
 
 
 # Пример использования функции
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/health"  # Укажите ваш API URL
+api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Укажите ваш API URL
 
 worker_id = 6135
 # ds = 'dataset\review_dataset.json'
-ds = 'dataset\sample_reviews.json'
+ds = '../dataset/sample_reviews.json'
 
 with open(ds, 'r', encoding='utf-8') as file:
     ds_reviews = json.load(file)
