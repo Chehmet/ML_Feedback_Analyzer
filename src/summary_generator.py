@@ -2,6 +2,7 @@ import requests
 import json
 from typing import List, Dict
 import time
+import ast
 
 
 def generate_summary(reviews: List[str], api_url: str) -> str:
@@ -41,7 +42,7 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
     if response.status_code == 200:
         try:
             result = response.text
-            return result
+            return ast.literal_eval(result)
         except (KeyError, IndexError) as e:
             return e
     else:
