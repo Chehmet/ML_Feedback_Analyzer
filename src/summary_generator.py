@@ -3,6 +3,7 @@ import json
 from typing import List, Dict
 import time
 import ast
+from utils import *
 
 
 def generate_summary(reviews: List[str], api_url: str) -> str:
@@ -30,32 +31,17 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
         "prompt": [prompt],
         "apply_chat_template": True,
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию для краткого резюме.",
-        "max_tokens": 150,
+        "max_tokens": 200,
         "n": 1,
         "temperature": 0.2
     }
 
-    # Выполнение запроса к API
-    response = requests.post(api_url, data=json.dumps(data), headers={"Content-Type": "application/json"})
-    
-    # Проверка ответа и извлечение текста summary
-    if response.status_code == 200:
-        try:
-            result = response.text
-            return ast.literal_eval(result)
-        except (KeyError, IndexError) as e:
-            return e
-    else:
-        return "Error occured"
+    headers = {
+        "Content-Type": "application/json"
+    }
 
+    return get_response(api_url, data, headers)
 
-def get_reviews(ds_reviews, worker_id):
-    return [
-        item['review']
-        for item in ds_reviews
-        if item['ID_under_review'] == worker_id 
-        # and item['ID_reviewer'] != worker_id
-    ]
 
 # Пример использования функции
 api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL

@@ -3,9 +3,10 @@ import json
 from typing import List, Dict
 import time
 import ast
+from utils import *
 
 
-def extract_hard_skills(reviews: List[str], api_url: str) -> Dict[str, Dict[str, str]]:
+def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
     # Объединяем отзывы в один текст для запроса
     reviews_text = " ".join(reviews)
 
@@ -24,35 +25,14 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> Dict[str, Dict[str,
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию о ключевых навыках сотрудника.",
         "max_tokens": 100,
         "n": 1,
-        "temperature": 0.3  # поменять?
+        "temperature": 0.2
     }
         
     headers = {
         "Content-Type": "application/json"
     }
 
-    # Выполнение запроса к API
-    response = requests.post(api_url, data=json.dumps(data), headers=headers)
-
-    # Проверка статуса ответа и извлечение данных
-    if response.status_code == 200:
-        try:
-            response_data = response.json()
-            response_list = ast.literal_eval(response_data)
-            return response_list
-        except (KeyError, IndexError) as e:
-            return e
-    else:
-        return "Error occured"
-
-
-def get_reviews(ds_reviews, worker_id):
-    return [
-        item['review']
-        for item in ds_reviews
-        if item['ID_under_review'] == worker_id 
-        # and item['ID_reviewer'] != worker_id
-    ]
+    return get_response(api_url, data, headers)
 
 
 # Пример использования функции
