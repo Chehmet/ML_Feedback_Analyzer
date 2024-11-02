@@ -17,6 +17,10 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
     """
     # Объединяем отзывы в один текст для запроса
     reviews_text = " ".join(reviews)
+    # print(reviews_text)
+    # text_file = open("reviews_text.txt", "w", encoding='utf-8')
+    # text_file.write(reviews_text)
+    # text_file.close()
 
     # Подготавливаем prompt для генерации краткого summary
     prompt = f"""
@@ -31,7 +35,8 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию для краткого резюме.",
         "max_tokens": 200,
         "n": 1,
-        "temperature": 0.2
+        # "top_k": 15,
+        "temperature": 0.2,
     }
 
     headers = {
@@ -42,15 +47,16 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
 
 
 # Пример использования функции
-api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
 
-worker_id = 6135
+# api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
+
+# worker_id = 6135
 
 
-s = time.time()
-reviews = get_reviews(worker_id)
-summary = generate_summary(reviews, api_url)
-print(summary)
-e = time.time()
+# s = time.time()
+# reviews = get_reviews(worker_id)
+# summary = generate_summary(reviews, api_url)
+# print(summary)
+# e = time.time()
 
-print(f"\nExecution time: {e-s:.2f} sec")
+# print(f"\nExecution time: {e-s:.2f} sec")

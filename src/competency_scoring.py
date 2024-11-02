@@ -20,7 +20,7 @@ competencies = [
 ]
 
 
-def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> Dict[str, Dict[str, str]]:
+def evaluate_competencies(reviews: List[str], api_url: str) -> Dict[str, Dict[str, str]]:
     """
     Оценивает компетенции по отзывам и возвращает оценки и объяснения.
 
@@ -44,7 +44,6 @@ def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> D
     КРАТКО, а также цитату из отзыва, подтверждающую вашу оценку.
     Если компетенция не присутствует в отзывах, ПРОПУСТИТЕ её.
 	Ответ в формате json_object:
-        "id": {worker_id},
         "competency": "<название компетенции>",
         "score": "<оценка>",
         "reason": "<краткое описание причины>",
@@ -58,7 +57,8 @@ def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> D
         "system_prompt": "Ты профессионально различаешь компетенции и обнаруживаешь их в обычных отзывах от сотрудников, а также выдаешь оценку на основе компетенций.",
         "max_tokens": 4096,
         "n": 1,
-        "temperature": 0.2
+        "temperature": 0.2,
+        # "top_k": 15,
     }
     
     headers = {
@@ -70,16 +70,17 @@ def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> D
 
 
 # Пример использования функции
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
-# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
 
-worker_id = 6135
+# api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
+# # api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
+
+# worker_id = 6135
 
 
-s = time.time()
-reviews = get_reviews(worker_id)
-competency_evaluation = evaluate_competencies(reviews, worker_id, api_url)
-print(competency_evaluation)
-e = time.time()
+# s = time.time()
+# reviews = get_reviews(worker_id)
+# competency_evaluation = evaluate_competencies(reviews, api_url)
+# print(competency_evaluation)
+# e = time.time()
 
-print(f"\nExecution time: {e-s:.2f} sec")
+# print(f"\nExecution time: {e-s:.2f} sec")

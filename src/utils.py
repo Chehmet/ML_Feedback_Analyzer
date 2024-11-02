@@ -18,7 +18,7 @@ def get_reviews(worker_id):
         for item in ds_reviews
         if item['ID_under_review'] == worker_id
         and item['ID_reviewer'] != worker_id
-    ]
+    ][:10]
 
 
 def extract_list(text):

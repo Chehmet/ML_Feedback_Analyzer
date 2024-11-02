@@ -23,7 +23,8 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию о ключевых навыках сотрудника.",
         "max_tokens": 100,
         "n": 1,
-        "temperature": 0.2
+        "temperature": 0.2,
+        # "top_k": 15,
     }
         
     headers = {
@@ -35,18 +36,19 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
 
 
 # Пример использования функции
-# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
 
-worker_id = 6135
+# # api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
+# api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
+
+# worker_id = 6135
 
 
-s = time.time()
-reviews = get_reviews(worker_id)
-hard_skills = extract_hard_skills(reviews, api_url)
-print(hard_skills)
-print(type(hard_skills))
-e = time.time()
+# s = time.time()
+# reviews = get_reviews(worker_id)
+# hard_skills = extract_hard_skills(reviews, api_url)
+# print(hard_skills)
+# print(type(hard_skills))
+# e = time.time()
 
-print(f"Execution time: {e-s:.2f} sec")
+# print(f"Execution time: {e-s:.2f} sec")
 
