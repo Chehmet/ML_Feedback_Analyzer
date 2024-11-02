@@ -2,14 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ employee.name }} - Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Skills Balance Wheel</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 400px;
+            max-height: 400px;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ employee.name }}</h1>
-    <p><strong>Department:</strong> {{ employee.department }}</p>
-    <p><strong>Average Rating:</strong> {{ employee.average_rating }}</p>
-    <p><strong>Feedback Summary:</strong> {{ employee.summary }}</p>
+    <div class="container">
+        <h1>Employee: {{ employee.user_id }}</h1>
+        <p><strong>Average Rating:</strong> {{ rating }}</p>
 
-    <a href="{% url 'add_feedback' employee.id %}">Leave Feedback</a>
+        {% if summary %}
+            <p><strong>Summary:</strong> {{ summary.summary_text }}</p>
+        {% endif %}
+
+        <h1>Social Skills Balance Wheel</h1>
+        <canvas id="myRadarChart"></canvas>
+    </div>
+
+    <script>
+        const skills = {{soft_skills}};
+        const ctx = document.getElementById('myRadarChart').getContext('2d');
+        const myRadarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Профессионализм',
+                    'Инициативность',
+                    'Работа в команде',
+                    'Лидерство',
+                    'Планирование',
+                    'Адаптивность',
+                    'Решительность',
+                    'Ответственность',
+                    'Целеустремленность',
+                    'Саморазвитие',
+                    'Коммуникация',
+                ],
+                datasets: [{
+                    label: 'Skills Rating',
+                    data: skills,
+                    backgroundColor: 'rgba(76, 175, 80, 0.5)',
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1,
+                    pointBackgroundColor: 'rgba(76, 175, 80, 1)',
+                }]
+            },
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 5, // Assuming max rating is 5
+                        stepSize: 1
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+    </script>
 </body>
 </html>
