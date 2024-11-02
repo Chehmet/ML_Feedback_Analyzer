@@ -30,24 +30,22 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
         "Content-Type": "application/json"
     }
 
-    return get_response(api_url, data, headers, data_structure=True)
+    response = get_response(api_url, data, headers)
+    return extract_list(response)
 
 
 # Пример использования функции
-api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
+# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
+api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
 
 worker_id = 6135
-# ds = 'dataset\review_dataset.json'
-ds = 'dataset\sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
 
 
 s = time.time()
-reviews = get_reviews(ds_reviews, worker_id)
+reviews = get_reviews(worker_id)
 hard_skills = extract_hard_skills(reviews, api_url)
 print(hard_skills)
+print(type(hard_skills))
 e = time.time()
 
 print(f"Execution time: {e-s:.2f} sec")

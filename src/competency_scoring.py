@@ -2,6 +2,7 @@ import json
 from typing import List, Dict
 import time
 from utils import *
+import ast
 
 
 # Определение компетенций
@@ -64,23 +65,19 @@ def evaluate_competencies(reviews: List[str], worker_id: int, api_url: str) -> D
         "Content-Type": "application/json"
     }
 
-    return get_response(api_url, data, headers, data_structure=True)
+    response = get_response(api_url, data, headers)
+    return ast.literal_eval(response)
 
 
 # Пример использования функции
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Укажите ваш API URL
+api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
+# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
 
 worker_id = 6135
-# ds = 'dataset\review_dataset.json'
-ds = 'dataset\sample_reviews.json'
-# ds = '../dataset/sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
 
 
 s = time.time()
-reviews = get_reviews(ds_reviews, worker_id)
+reviews = get_reviews(worker_id)
 competency_evaluation = evaluate_competencies(reviews, worker_id, api_url)
 print(competency_evaluation)
 e = time.time()

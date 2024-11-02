@@ -38,29 +38,17 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
         "Content-Type": "application/json"
     }
 
-    return get_response(api_url, data, headers, data_structure=False)
+    return get_response(api_url, data, headers)
 
 
 # Пример использования функции
 api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
-# reviews = [
-#     "Отлично справляется с задачами, всегда проявляет инициативу.",
-#     "Хорошо работает в команде и помогает другим участникам.",
-#     "Долго адаптируется к трудностям и не решает проблемы.",
-#     "Четкий и структурный - это прямо про. Шарит за свое дело максимально глубоко, тут нет ни малейшего сомнения. Все задачи проходят по строгому флоу, который составлен с учетом всех нюансов проекта, которые могут возникнуть. всегда смотрит на задачу с точки зрения целей, для которых она делается, что помогает всем проектам четко понимать действительно ли они были эффективны. Зоны роста: голосом все вопросы решаются быстро и суперконструктивно, всегда можем договориться и найти наиболее компромиссное решение с точки зрения целей всех команд. В переписке сложнее найти общий язык (допускаю, что особенность во мне)",
-# ]
 
 worker_id = 6135
-# ds = 'dataset\review_dataset.json'
-ds = 'dataset\sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
-
 
 
 s = time.time()
-reviews = get_reviews(ds_reviews, worker_id)
+reviews = get_reviews(worker_id)
 summary = generate_summary(reviews, api_url)
 print(summary)
 e = time.time()
