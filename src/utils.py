@@ -2,6 +2,7 @@ import requests
 import json
 import ast
 
+
 def get_reviews(ds_reviews, worker_id):
     return [
         item['review']

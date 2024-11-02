@@ -1,8 +1,6 @@
-import requests
 import json
 from typing import List, Dict
 import time
-import ast
 from utils import *
 
 
