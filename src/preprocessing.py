@@ -34,8 +34,10 @@ def preprocess_reviews(data, url):
         "же", "если", "как", "так", "чтобы", "ну"
     }
     processed_data = []
+    cnt_b, cnt_af = 0, 0
     for entry in data:
         tokens_before = len(entry.split())
+        cnt_b += tokens_before
         # Убираем текст в квадратных скобках и очищаем пробелы
         clean_text = re.sub(r"\[.*?\]", "", entry)
         clean_text = clean_text.replace("\n", "").replace("/", "").replace("-", "").replace("  ", " ")
@@ -50,26 +52,20 @@ def preprocess_reviews(data, url):
             processed_data.append(entry)
 
         tokens_after = len(clean_text.split())
-        print(f"Tokens before: {tokens_before}\t After: {tokens_after}")
+        cnt_af += tokens_after
 
+        print(f"Tokens before: {tokens_before}\t After: {tokens_after}")
+    print(f"All tokens before: {cnt_b}\t After: {cnt_af}\t Percentage: {cnt_af/cnt_b}")
     return processed_data
 
-# Пример данных
-# data = [
-#     {"ID_reviewer": 475, "ID_under_review": 6135, "review": "лучший программист эвер! и классный человек! однозначно недополучает, нужно поднимать зп!"},
-#     {"ID_reviewer": 325, "ID_under_review": 6135, "review": "Хороший специалист"},
-#     {"ID_reviewer": 23443, "ID_under_review": 6135, "review": "Конструктивное и плодотворное сотрудничество, спасибо!"},
-#     {"ID_reviewer": 856, "ID_under_review": 6135, "review": "Отлично справляется с задачами\n, проявляет инициативу и отвечает [ole] за результат."}
-# ]
 
-# Применение функции
-# processed_data = preprocess_reviews(data)
-# print("Processed Data:", processed_data)
 
-ds = r'dataset\sample_reviews.json'
+ds = r'dataset\review_dataset.json'
 
 with open(ds, 'r', encoding='utf-8') as file:
     ds_reviews = json.load(file)
+    # print(ds_reviews)
+# all_reviews = [item["review"] for item in ds_reviews]
 
 worker_id = 6135
 api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
