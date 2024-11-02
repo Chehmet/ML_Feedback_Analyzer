@@ -72,7 +72,7 @@ api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generat
 
 worker_id = 6135
 # ds = 'dataset\review_dataset.json'
-ds = 'dataset\sample_reviews.json'
+ds = '../dataset/sample_reviews.json'
 
 with open(ds, 'r', encoding='utf-8') as file:
     ds_reviews = json.load(file)
