@@ -30,7 +30,7 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
         "Content-Type": "application/json"
     }
 
-    return get_response(api_url, data, headers)
+    return get_response(api_url, data, headers, data_structure=True)
 
 
 # Пример использования функции

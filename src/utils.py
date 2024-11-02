@@ -15,7 +15,7 @@ def get_reviews(ds_reviews, worker_id):
 def extract_list(text):
     pass
 
-def get_response(api_url, data, headers):
+def get_response(api_url, data, headers, data_structure=False):
     # Выполнение запроса к API
     response = requests.post(api_url, data=json.dumps(data), headers=headers)
 
@@ -23,7 +23,9 @@ def get_response(api_url, data, headers):
     if response.status_code == 200:
         try:
             response_data = response.json()
-            return ast.literal_eval(response_data)
+            if data_structure:
+                response_data = ast.literal_eval(response_data)
+            return response_data
         except Exception as e:
             return e
     else:

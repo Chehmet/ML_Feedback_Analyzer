@@ -38,7 +38,7 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
         "Content-Type": "application/json"
     }
 
-    return get_response(api_url, data, headers)
+    return get_response(api_url, data, headers, data_structure=False)
 
 
 # Пример использования функции
