@@ -11,11 +11,9 @@ def is_relevant(review):
         "молодец", "умница", "отличный", "спасибо", "рекомендую", "ужасный", "плохой"
     ]
     
-    # Если длина отзыва слишком короткая
     if len(review.split()) < 5:
         return False
     
-    # Проверка на ключевые слова, указывающие на нерелевантность
     if any(keyword in review.lower() for keyword in irrelevant_keywords):
         return False
 
@@ -32,12 +30,12 @@ def preprocess_reviews(data, url):
     # Определяем список стоп-слов (предлоги, союзы и прочие)
     stopwords = {
         "в", "на", "по", "с", "за", "для", "и", "к", "от", "о", "об", "до", "через",
-        "под", "над", "у", "при", "без", "из", "между", "а", "но", "или", "то",
+        "под", "над", "у", "при", "из", "между", "а", "но", "или", "то",
         "же", "если", "как", "так", "чтобы", "ну"
     }
-    
     processed_data = []
     for entry in data:
+        tokens_before = len(entry.split())
         # Убираем текст в квадратных скобках и очищаем пробелы
         clean_text = re.sub(r"\[.*?\]", "", entry)
         clean_text = clean_text.replace("\n", "").replace("/", "").replace("-", "").replace("  ", " ")
@@ -50,16 +48,19 @@ def preprocess_reviews(data, url):
         if is_relevant(relevant_text):
             entry = relevant_text
             processed_data.append(entry)
-    
+
+        tokens_after = len(clean_text.split())
+        print(f"Tokens before: {tokens_before}\t After: {tokens_after}")
+
     return processed_data
 
 # Пример данных
-data = [
-    {"ID_reviewer": 475, "ID_under_review": 6135, "review": "лучший программист эвер! и классный человек! однозначно недополучает, нужно поднимать зп!"},
-    {"ID_reviewer": 325, "ID_under_review": 6135, "review": "Хороший специалист"},
-    {"ID_reviewer": 23443, "ID_under_review": 6135, "review": "Конструктивное и плодотворное сотрудничество, спасибо!"},
-    {"ID_reviewer": 856, "ID_under_review": 6135, "review": "Отлично справляется с задачами\n, проявляет инициативу и отвечает [ole] за результат."}
-]
+# data = [
+#     {"ID_reviewer": 475, "ID_under_review": 6135, "review": "лучший программист эвер! и классный человек! однозначно недополучает, нужно поднимать зп!"},
+#     {"ID_reviewer": 325, "ID_under_review": 6135, "review": "Хороший специалист"},
+#     {"ID_reviewer": 23443, "ID_under_review": 6135, "review": "Конструктивное и плодотворное сотрудничество, спасибо!"},
+#     {"ID_reviewer": 856, "ID_under_review": 6135, "review": "Отлично справляется с задачами\n, проявляет инициативу и отвечает [ole] за результат."}
+# ]
 
 # Применение функции
 # processed_data = preprocess_reviews(data)
