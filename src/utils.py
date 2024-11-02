@@ -15,6 +15,7 @@ def get_reviews(ds_reviews, worker_id):
 def extract_list(text):
     pass
 
+
 def get_response(api_url, data, headers, data_structure=False):
     # Выполнение запроса к API
     response = requests.post(api_url, data=json.dumps(data), headers=headers)
