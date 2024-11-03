@@ -1,7 +1,9 @@
 import json
 from typing import List, Dict
 import time
+
 from .utils import *
+# from utils import *
 
 
 def generate_summary(reviews: List[str], api_url: str) -> str:
@@ -17,10 +19,6 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
     """
     # Объединяем отзывы в один текст для запроса
     reviews_text = " ".join(reviews)
-    # print(reviews_text)
-    # text_file = open("reviews_text.txt", "w", encoding='utf-8')
-    # text_file.write(reviews_text)
-    # text_file.close()
 
     # Подготавливаем prompt для генерации краткого summary
     prompt = f"""

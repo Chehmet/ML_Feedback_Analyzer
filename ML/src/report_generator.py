@@ -46,24 +46,24 @@ def get_report(worker_id, reviews=None):
 
     data = {
         'competencies': competencies,
-        'hard skills' : hard_skills,
+        'hard_skills' : hard_skills,
         'score' : score,
     }
 
     return data
 
 
-id = 6135
+# id = 6135
 
-s = time.time()
-reviews = get_list_useful_reviews(id)
-u = time.time()
-print(get_summary(id, reviews))
-m = time.time()
-print(get_report(id, reviews))
-e = time.time()
+# s = time.time()
+# reviews = get_list_useful_reviews(id)
+# u = time.time()
+# print(get_summary(id, reviews))
+# m = time.time()
+# print(get_report(id, reviews))
+# e = time.time()
 
-print(f"Useful reviews retrieval time: {u-s:.2f}")
-print(f"Summary generation time: {m-u:.2f}")
-print(f"Rest of report generation time: {e-m:.2f}")
-print(f"Whole report generation time: {e-s:.2f}")
+# print(f"Useful reviews retrieval time: {u-s:.2f}")
+# print(f"Summary generation time: {m-u:.2f}")
+# print(f"Rest of report generation time: {e-m:.2f}")
+# print(f"Whole report generation time: {e-s:.2f}")
