@@ -1,7 +1,7 @@
 import json
 from typing import List, Dict
 import time
-from utils import *
+from .utils import *
 
 
 def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
