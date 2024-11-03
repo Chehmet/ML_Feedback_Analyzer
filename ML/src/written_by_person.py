@@ -1,5 +1,6 @@
-# Here we have information about how person writes reviews to others,
-# if all of them are negative, or all of them are too positive
+"""
+Модуль для анализа стиля написания отзывов сотрудником.
+"""
 import requests
 import json
 import time
@@ -19,7 +20,6 @@ def analyze_review_style(api_url, worker_id) -> str:
     reviews = get_reviews_written_by_person(worker_id)
     reviews_text = " ".join(reviews)
     
-    # Construct the prompt to analyze the tone of reviews
     prompt = f"""
     Пронализируй следующие отзывы: "{reviews_text}". 
     Определи, имеют ли они в основном положительный, отрицательный или сбалансированный тон. 
@@ -30,7 +30,6 @@ def analyze_review_style(api_url, worker_id) -> str:
     Не используй '\n' и другие знаки в ответе.
     """
 
-    # Set up the data for API request
     data = {
         "prompt": [prompt],
         "apply_chat_template": True,
@@ -44,7 +43,6 @@ def analyze_review_style(api_url, worker_id) -> str:
         "Content-Type": "application/json"
     }
 
-    # Make the API request
     response = requests.post(api_url, data=json.dumps(data), headers=headers)
     
     if response.status_code == 200:

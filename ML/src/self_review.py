@@ -6,7 +6,8 @@ import json
 import time
 from utils import *
 
-
+from dotenv import load_dotenv
+import os
 
 def get_self_reviews(worker_id):
     """
