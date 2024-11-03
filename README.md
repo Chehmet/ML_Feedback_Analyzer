@@ -42,11 +42,11 @@
 
 ## Стек технологий
 
-- **Бэкенд**: Django
+- **Бэкенд**: Django, Python, SQLite
 - **Фронтенд**: HTML, CSS, JavaScript
 - **Продвинутые техники больших языковых моделей**: классификатор(facebook/bart-large-mnli), prompt-engineering, перефразирование и эмбеддинги
 - **Обработка данных**: Python, API, NLP, transoformer(zero-shot, paraphrase-multilingual-MiniLM-L12-v2), кластеризация(KMeans), Torch
-- **Дизайн**: Figma для прототипирования интерфейса
+- **Дизайн**: Figma
 
 ---
 
