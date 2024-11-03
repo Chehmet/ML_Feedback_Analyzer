@@ -2,8 +2,8 @@ import json
 from typing import List, Dict
 import time
 
-from .utils import *
-# from utils import *
+# from .utils import *
+from utils import *
 
 
 def generate_summary(reviews: List[str], api_url: str) -> str:

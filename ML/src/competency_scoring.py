@@ -3,8 +3,8 @@ from typing import List, Dict
 import time
 import ast
 
-from .utils import *
-# from utils import *
+# from .utils import *
+from utils import *
 
 
 # Определение компетенций
