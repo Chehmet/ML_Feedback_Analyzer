@@ -4,10 +4,11 @@
 import requests
 import json
 import time
-# from utils import *
+from utils import *
 
 
-def get_self_reviews(ds_reviews, worker_id):
+
+def get_self_reviews(worker_id):
     """
     Извлекает отзывы, написанные конкретным сотрудником.
 
@@ -18,6 +19,8 @@ def get_self_reviews(ds_reviews, worker_id):
     Возвращает:
     list: Список отзывов, написанных сотрудником
     """
+    self_reviews = get_all_reviews()
+    
     return [
         item['review']
         for item in ds_reviews
@@ -25,7 +28,7 @@ def get_self_reviews(ds_reviews, worker_id):
     ]
 
 
-def analyze_review_style(api_url, self_rewiews, summary, worker_id) -> str:
+def analyze_self_review(api_url, summary, worker_id) -> str:
     """
     Анализирует стиль написания отзывов сотрудника и его самооценку.
 
@@ -42,7 +45,7 @@ def analyze_review_style(api_url, self_rewiews, summary, worker_id) -> str:
     Возвращает:
     str: Анализ стиля написания отзывов и самооценки сотрудника
     """
-    self_reviews = " ".join(self_rewiews)
+    self_reviews = " ".join(get_self_reviews(worker_id))
     
     prompt = f"""
     Проанализируй отзывы, написанные сотрудником: {self_reviews} и описание сотрудника: {summary}. 
@@ -71,25 +74,3 @@ def analyze_review_style(api_url, self_rewiews, summary, worker_id) -> str:
         error_message = f"Error: {response.status_code} - {response.text}"
         print(error_message)
         return error_message
-
-# Example usage of the function
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Replace with actual API URL
-worker_id = 28
-# ds = r'dataset\review_dataset.json'
-ds = '../dataset/sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
-
-s = time.time()
-self_reviews = get_self_reviews(ds_reviews, worker_id)
-summary = (
-    "Сотрудник открыт к диалогу, проявляет профессионализм и нацелен на результат. "
-    "Вежлив, в общении конструктивен, всегда готов объяснить свои решения. "
-    "Однако иногда демонстрирует склонность к излишней осторожности."
-)
-
-writer_style = analyze_review_style(api_url, self_reviews, summary, worker_id)
-print(writer_style)
-e = time.time()
-print(f"\nExecution time: {e-s:.2f} sec")
