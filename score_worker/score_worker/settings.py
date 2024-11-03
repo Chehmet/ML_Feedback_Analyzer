@@ -127,6 +127,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'main_page'
 LOGOUT_REDIRECT_URL = 'login'
+DATASET_DIR = "ml/dataset/new_dataset.json"
+WORKER_DATASET_DIR = "ml/dataset/workers_info.json"
+API_URL = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
+API_URL_BACKUP = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  
