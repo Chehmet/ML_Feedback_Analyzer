@@ -51,6 +51,7 @@ def url_review(citate, db):
         str: Unique hash ID of the review containing the citation, or None if not found.
     """
     for review in db:
+        print(citate.lower())
         if citate.lower() in review['review'].lower():
             if 'review_id' in review and review['review_id']:
                 return review["review_id"]
@@ -85,6 +86,7 @@ with open(db, 'r', encoding='utf-8') as file:
 #     if cnt <= 5:
 #         print(review)
 
+
 api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
 worker_id = 105560
 print("___________________")
@@ -97,6 +99,7 @@ for i in competency_evaluation:
     citate = i["confirmation"]
     review_id = url_review(citate, db)
     print(review_id)
+    print(citate)
 # citate = "Оперативно, понятно, просто и без лишней боли"
 # review_id = url_review(citate, db)
 # print("Review ID for citation:", review_id)
