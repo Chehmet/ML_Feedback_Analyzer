@@ -29,98 +29,117 @@
 <body>
   <!-- Header Section -->
   <header class="header">
-    <p class="logo">ScoreWorker</p>
+    <p class="logo" onclick="window.location.href='{% url 'login' %}'">ScoreWorker</p>
     <div class="button-container">
-      <button class="button search-button" href="{% url 'main_page'%}">Поиск</button>
-      <button class="button feedback-button" href="{% url 'feedback_form'%}">Отзыв</button>
+      <p class="button search-button" onclick=window.location.href="{% url 'main_page' %}">Поиск</p>
+      <p class="button feedback-button" onclick=window.location.href="{% url 'feedback_form' %}">Отзыв</p>
     </div>
   </header>
 
   <!-- Main Content with 7vw margin on left and right -->
   <main class="main-content">
     <div class="content-wrapper">
-      <!-- User ID Section -->
-      <section class="info-card">
-        <div class="info-chip">
-          <p class="info-text">ID {{ employee.user_id }}</p>
-        </div>
-        <div class="main-button-container">
-          <div class="info-chip download">
-            <button onclick=downloadPDF() class="button-text">Скачать отчет</button>
+        <!-- User ID Section -->
+        <section class="info-card">
+          <div class="info-chip">
+            <p class="info-text">ID {{ employee.user_id }}</p>
           </div>
-          <div class="info-chip update">
-          <button class="button-text">Обновить данные</button>
+          <div class="main-button-container">
+            <div class="info-chip download">
+              <button onclick=downloadPDF() class="button-text">Скачать отчет</button>
+            </div>
+            <div class="info-chip update">
+            <button class="button-text">Обновить данные</button>
+            </div>
           </div>
-        </div>
-      </section>
-
-
-      <!-- Summary Section -->
-      <section class="summary-section">
-        <div class="summary-content">
-          <h2 class="summary-title">Summary</h2>
-          <p class="summary-text">{{ summary.summary_text }}</p>
-        </div>
-      </section>
-
-      <!-- Worker Score Section -->
-      <div class="score-wrapper">
-        <div class="score-chip score">
-          <p class="grade">Оценка работника: {{ rating }}</p>
-        </div>
-        <div class="progress">
-          <div class="segment"></div>
-          <div class="segment"></div>
-          <div class="segment"></div>
-          <div class="segment"></div>
-          <div class="segment"></div>
-        </div>
-      </div>
-
-      <!-- Skills Section -->
-      <!-- <section class="skills-section">
-        <h2 class="skills-title">Soft Skills</h2>
-        <section class="chart-section">
-          <canvas id="myRadarChart" class="radarChart"></canvas>
         </section>
-        <h3 class="criteria-description">Описание критериев</h3>
-        <ul class="skills-list">
-          <li>Hummus</li>
-          <li>Pita</li>
-          <li>Green salad</li>
-          <li>Halloumi</li>
-        </ul>
-      </section> -->
-      <section class="skills-section">
-        <h2 class="skills-title">Soft Skills</h2>
-        <div class="chart-and-description">
-          <!-- Chart -->
+
+
+        <!-- Summary Section -->
+        <section class="summary-section">
+          <div class="summary-content">
+            <h2 class="summary-title">Summary</h2>
+            <p class="summary-text">{{ summary.summary_text }}</p>
+          </div>
+        </section>
+
+        <!-- Worker Score Section -->
+        <div class="score-wrapper">
+          <div class="score-chip score">
+            <p class="grade">Оценка работника: {{ rating }}</p>
+          </div>
+          <div class="progress">
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+          </div>
+        </div>
+        <script>
+          // Rating value from Django template
+          const rating_scale = {{ rating }};
+          const totalSegments = 5;
+          const filledSegments = Math.round(rating_scale);
+
+          // Get all segment elements
+          const segments = document.querySelectorAll('.progress .segment');
+
+          // Loop through segments and apply color based on the rating
+          segments.forEach((segment, index) => {
+            if (index < filledSegments) {
+              segment.style.backgroundColor = '#0077FF'; // Filled color
+            } else {
+              segment.style.backgroundColor = 'lightgray'; // Unfilled color
+            }
+          });
+        </script>
+
+
+        <!-- Skills Section -->
+        <!-- <section class="skills-section">
+          <h2 class="skills-title">Soft Skills</h2>
           <section class="chart-section">
             <canvas id="myRadarChart" class="radarChart"></canvas>
           </section>
-          <!-- Criteria Description -->
-          <div class="criteria-description">
-            <h3>Описание критериев</h3>
-            <ul class="skills-list">
-              <li>Hummus</li>
-              <li>Pita</li>
-              <li>Green salad</li>
-              <li>Halloumi</li>
-            </ul>
+          <h3 class="criteria-description">Описание критериев</h3>
+          <ul class="skills-list">
+            <li>Hummus</li>
+            <li>Pita</li>
+            <li>Green salad</li>
+            <li>Halloumi</li>
+          </ul>
+        </section> -->
+        <section class="skills-section">
+          <h2 class="skills-title">Soft Skills</h2>
+          <div class="chart-and-description">
+            <!-- Chart -->
+            <section class="chart-section">
+              <canvas id="myRadarChart" class="radarChart"></canvas>
+            </section>
+            <!-- Criteria Description -->
+            <div class="criteria-description">
+              <h3>Описание критериев</h3>
+              <ul class="skills-list">
+                <li>HummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummusHummus</li>
+                <li>Pita</li>
+                <li>Green salad</li>
+                <li>Halloumi</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
 
-      <section class="skills-section">
-        <h2 class="skills-title">Hard Skills</h2>
-        <ul class="skills-list">
-          <li>Hummus</li>
-          <li>Pita</li>
-          <li>Green salad</li>
-          <li>Halloumi</li>
-        </ul>
-      </section>
+        <section class="skills-section">
+          <h2 class="skills-title">Hard Skills</h2>
+          <ul class="skills-list">
+            <li>Hummus</li>
+            <li>Pita</li>
+            <li>Green salad</li>
+            <li>Halloumi</li>
+          </ul>
+        </section>
 
       <!-- Feedback Section -->
       <section class="feedback-section">
@@ -176,13 +195,14 @@
           maintainAspectRatio: true,
           responsive: true,
           scale: {
-            ticks: {
-              beginAtZero: true,
-              max: 5,
-              stepSize: 1
+            r: {  // "r" is used in Chart.js v3+ for the radial scale in radar charts
+              min: 1,         // Set exact minimum value to 1
+              max: 5,         // Set exact maximum value to 5
+              ticks: {
+                stepSize: 1   // Step size of 1 to show each level clearly
+              }
             }
           },
-          responsive: true,
           plugins: {
             legend: {
               position: 'top',
@@ -192,82 +212,42 @@
       });
     </script>
     
-    <!-- <script>
+    <script>
       function downloadPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        const content = document.querySelector(".main-content");
+        const sectionsToCapture = [
+          document.querySelector(".info-text"),           
+          document.querySelector(".summary-section"),     
+          document.querySelector(".score-wrapper"),       
+          document.querySelector(".skills-section"),      
+          document.querySelector(".skills-section + .skills-section")
+        ];
 
-        html2canvas(content, {
-          scale: 2,
-        }).then(canvas => {
-          const imgData = canvas.toDataURL("image/png");
-          const imgWidth = 190;
-          const pageHeight = 297;
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let position = 1;
 
-          let heightLeft = imgHeight;
-          let position = 0;
+        sectionsToCapture.forEach((section, index) => {
+          html2canvas(section, {
+            scale: 2,
+          }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const imgWidth = 170;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-          while (heightLeft >= 0) {
-            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-            position -= pageHeight;
-            if (heightLeft > 0) doc.addPage();
-          }
-          doc.save("page.pdf");
+            doc.addImage(imgData, 'PNG', 1, position, imgWidth, imgHeight);
+            position += imgHeight + 1;
+
+            if (index === sectionsToCapture.length - 1) {
+              doc.save("report.pdf");
+            } else if (position + imgHeight > doc.internal.pageSize.height) {
+              doc.addPage();
+              position = 1;
+            }
+          });
         });
       }
-    </script> -->
-    <script>
-    function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  
-  // Define margins and starting position
-  const margin = 10;
-  let yPosition = 10;
-
-  // Capture each section as a promise to ensure they all render before saving
-  const sections = [
-    { selector: ".info-card", label: "ID and Download/Update Buttons" },
-    { selector: ".score-wrapper", label: "Score and Scale" },
-    { selector: ".summary-section", label: "Summary" },
-    { selector: ".skills-section .chart-section", label: "Soft Skills Chart" },
-    { selector: ".skills-section .criteria-description", label: "Soft Skills Description" },
-    { selector: ".skills-section + .skills-section", label: "Hard Skills" }
-  ];
-
-  // Store promises for each canvas render
-  const sectionPromises = sections.map(section => {
-    const element = document.querySelector(section.selector);
-    if (element) {
-      return html2canvas(element, { scale: 2 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const imgWidth = 190; // Width in mm for A4
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        if (yPosition + imgHeight > doc.internal.pageSize.height) {
-          doc.addPage();  // Add a new page if space is insufficient
-          yPosition = margin;
-        }
-
-        doc.addImage(imgData, 'PNG', margin, yPosition, imgWidth, imgHeight);
-        yPosition += imgHeight + 10; // Adjust position for the next section
-      });
-    } else {
-      // Return a resolved promise if no element was found for that section
-      return Promise.resolve();
-    }
-  });
-
-  // Wait for all sections to render and be added to the PDF
-  Promise.all(sectionPromises).then(() => {
-    doc.save("employee_report.pdf");
-  });
-}
-  </script>
+    </script>
   </main>
 </body>
 </html>

@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+        rel="stylesheet">
+
     <title>Login</title>
     <style>
+        :root {
+            --font-family-rethink-sans: 'Nunito', sans-serif;
+        }
         body {
-            font-family: Rethink Sans;
+            font-family: var(--font-family-rethink-sans);
             background-color: #f5f7f9;
             display: flex;
             justify-content: center;
@@ -17,30 +23,36 @@
             height: 100vh;
             margin: 0;
         }
+
         .container {
             text-align: center;
-            background-color: #F5F5F5;
-            padding: 30px;
+            background-color: #fff;
+            padding: 25px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 400px;
         }
         h2 {
+            font-family: var(--font-family-rethink-sans);
             font-size: 32px;
             color: #000000;
             margin-bottom: 20px;
         }
+
         .form-group {
             margin-bottom: 15px;
             text-align: left;
         }
         label {
+            font-family: var(--font-family-rethink-sans);
             font-size: 14px;
             color: #333;
             display: block;
             margin-bottom: 5px;
         }
+
         .form-input {
+            font-family: var(--font-family-rethink-sans);
             width: 100%;
             padding: 10px;
             border-radius: 18px;
@@ -49,10 +61,14 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+
         .form-input::placeholder {
+            font-family: var(--font-family-rethink-sans);
             color: #aaa;
         }
+
         .submit-button {
+            font-family: var(--font-family-rethink-sans);
             width: 100%;
             padding: 10px;
             border-radius: 18px;
@@ -76,7 +92,7 @@
 <body>
 
 <div class="container">
-    <h2>Вход в систему</h2>
+    <h2>Войдите в систему</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="form-group">

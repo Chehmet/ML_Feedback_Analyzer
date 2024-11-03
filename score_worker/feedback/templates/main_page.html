@@ -1,75 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&family=Nunito:wght@400;700&display=swap"
+        rel="stylesheet">
     <title>Employee Feedback Search</title>
     <style>
+        :root {
+            --primary-color: #0077FF;
+            --background-color: #f5f7f9;
+            --text-color: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f7f9;
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--background-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding-top: 70px;
         }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--background-color);
+            border-bottom: 1.5px solid #E0E0E0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        .button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--text-color);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 0.85rem;
+        }
+
+        /* button.submit-button {
+            margin-top: 10vh;
+        } */
+
         .container {
             text-align: center;
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
         }
+
         .search-label {
-            font-size: 32px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 2.5rem;
             color: #333;
             margin-bottom: 20px;
             display: block;
         }
+
         .search-box {
             display: flex;
             align-items: center;
             width: 500px;
             border-radius: 25px;
             background-color: #fff;
-            border: 1px solid #000000;
+            border: 1px solid #E0E0E0;
             padding: 10px 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* margin-bottom: 10vh; */
         }
+
         .search-box input {
             border: none;
             outline: none;
             flex: 1;
             font-size: 16px;
         }
+
         .search-box input::placeholder {
             color: #aaa;
         }
-        .search-box button {
+
+        /* .search-box button {
             background: none;
             border: none;
             cursor: pointer;
-        }
+            margin-left: 10px; 
+        } */
+
         .search-box button img {
             width: 16px;
             height: 16px;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <label class="search-label" for="user_id">Введите ID работника</label>
-    <form method="POST" action="">
-        {% csrf_token %}
-        <div class="search-box">
-            <input type="text" id="user_id" name="user_id" placeholder="ID_123456" required>
-            <button type="submit">
-                <img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="Search Icon">
-            </button>
+    <header class="header">
+        <!-- <p class="logo">ScoreWorker</p> -->
+        <p class="logo" onclick="window.location.href='{% url 'login' %}'">ScoreWorker</p>
+        <div class="button-container">
+            <p class="button search-button" onclick="window.location.href='{% url 'main_page' %}'">Поиск</p>
+            <p class="button feedback-button" onclick="window.location.href='{% url 'feedback_form' %}'">Отзыв</p>
         </div>
-    </form>
-</div>
+    </header>
+
+    <div class="container">
+        <label class="search-label" for="user_id">Введите ID работника</label>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="search-box">
+                <input type="text" id="user_id" name="user_id" placeholder="ID_123456" required>
+                <button type="submit">
+                    <img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="Search Icon">
+                </button>
+            </div>
+        </form>
+    </div>
 
 </body>
+
 </html>
