@@ -1,3 +1,6 @@
+"""
+Модуль для генерации отчетов о сотрудниках на основе отзывов.
+"""
 from summary_generator import generate_summary
 from competency_scoring import evaluate_competencies
 from hard_skills_generator import extract_hard_skills
@@ -11,24 +14,63 @@ api = os.getenv("API_URL")
 
 
 def get_summary(worker_id, reviews=None):
+    """
+    Генерирует сводку для сотрудника на основе отзывов.
+
+    Аргументы:
+    worker_id (int): ID сотрудника
+    reviews (list, optional): Список отзывов. Если не указан, будет получен автоматически.
+
+    Возвращает:
+    str: Сгенерированная сводка
+    """
     if not reviews:
         reviews = get_list_useful_reviews(worker_id)
     return generate_summary(reviews, api)
 
 
 def get_competencies(worker_id, reviews=None):
+    """
+    Оценивает компетенции сотрудника на основе отзывов.
+
+    Аргументы:
+    worker_id (int): ID сотрудника
+    reviews (list, optional): Список отзывов. Если не указан, будет получен автоматически.
+
+    Возвращает:
+    list: Список оцененных компетенций
+    """
     if not reviews:
         reviews = get_list_useful_reviews(worker_id)
     return evaluate_competencies(reviews, api)
 
 
 def get_hardskills(worker_id, reviews=None):
+    """
+    Выявляет технические навыки сотрудника на основе отзывов.
+
+    Аргументы:
+    worker_id (int): ID сотрудника
+    reviews (list, optional): Список отзывов. Если не указан, будет получен автоматически.
+
+    Возвращает:
+    list: Список выявленных технических навыков
+    """
     if not reviews:
         reviews = get_list_useful_reviews(worker_id)
     return extract_hard_skills(reviews, api)
 
 
 def calculate_score(competencies):
+    """
+    Рассчитывает общий балл на основе оценок компетенций.
+
+    Аргументы:
+    competencies (list): Список оцененных компетенций
+
+    Возвращает:
+    float: Средний балл по всем компетенциям
+    """
     total_score = 0
     for competency in competencies:
         if competency['score']:
@@ -37,6 +79,16 @@ def calculate_score(competencies):
 
 
 def get_report(worker_id, reviews=None):
+    """
+    Создает полный отчет о сотруднике.
+
+    Аргументы:
+    worker_id (int): ID сотрудника
+    reviews (list, optional): Список отзывов. Если не указан, будет получен автоматически.
+
+    Возвращает:
+    dict: Словарь с данными отчета, включая компетенции, технические навыки и общий балл
+    """
     if not reviews:
         reviews = get_list_useful_reviews(worker_id)
 
@@ -51,19 +103,3 @@ def get_report(worker_id, reviews=None):
     }
 
     return data
-
-
-# id = 6135
-
-# s = time.time()
-# reviews = get_list_useful_reviews(id)
-# u = time.time()
-# print(get_summary(id, reviews))
-# m = time.time()
-# print(get_report(id, reviews))
-# e = time.time()
-
-# print(f"Useful reviews retrieval time: {u-s:.2f}")
-# print(f"Summary generation time: {m-u:.2f}")
-# print(f"Rest of report generation time: {e-m:.2f}")
-# print(f"Whole report generation time: {e-s:.2f}")

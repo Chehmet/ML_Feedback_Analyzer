@@ -51,7 +51,6 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
         print(error_message)
         return error_message
 
-# Example usage of the function
 api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Replace with actual API URL
 worker_id = 28
 ds = r'dataset\review_dataset.json'
