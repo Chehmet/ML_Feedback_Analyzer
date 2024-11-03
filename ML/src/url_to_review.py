@@ -88,9 +88,13 @@ db = get_all_reviews()
 
 api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
 worker_id = 105560
-reviews = get_list_useful_reviews(worker_id)
-competency_evaluation = evaluate_competencies(reviews, api_url)
 
-for i in competency_evaluation:
-    citate = i["confirmation"]
-    review_id = url_review(citate, db)
+
+def get_competency_references(worked_id):
+    reviews = get_list_useful_reviews(worker_id)
+    competency_evaluation = evaluate_competencies(reviews, api_url)
+    for i in range(len(competency_evaluation)):
+        citate = competency_evaluation[i]["confirmation"]
+        review_id = url_review(citate, db)
+        competency_evaluation[i]['ref'] = review_id
+    return competency_evaluation
