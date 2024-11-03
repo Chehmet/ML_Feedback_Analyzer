@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,11 +8,21 @@
 <link
   href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
   rel="stylesheet">
-  
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+  rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="{% static 'styles.css'%}">
   <title>ScoreWorker</title>
 </head>
 
@@ -20,9 +31,8 @@
   <header class="header">
     <p class="logo">ScoreWorker</p>
     <div class="button-container">
-      <button class="button search-button" href="{% url 'main_page' %}">Поиск</button>
-      <button class="button feedback-button" href="{% url 'feedback_form' %}">Отзыв</button>
-      <button onclick=downloadPDF()>Скачать оценку в формате PDF</button>
+      <button class="button search-button" href="{% url 'main_page'%}">Поиск</button>
+      <button class="button feedback-button" href="{% url 'feedback_form'%}">Отзыв</button>
     </div>
   </header>
 
@@ -32,15 +42,18 @@
       <!-- User ID Section -->
       <section class="info-card">
         <div class="info-chip">
-          <p class="info-text">{{ employee.user_id }}</p>
+          <p class="info-text">ID {{ employee.user_id }}</p>
         </div>
-        <div class="info-chip score">
-          <p class="info-text">Worker Score: {{ rating }</p>
-        </div>
-        <div class="info-chip update">
-          <p class="info-text">Обновить данные</p>
+        <div class="main-button-container">
+          <div class="info-chip download">
+            <button onclick=downloadPDF() class="button-text">Скачать отчет</button>
+          </div>
+          <div class="info-chip update">
+          <button class="button-text">Обновить данные</button>
+          </div>
         </div>
       </section>
+
 
       <!-- Summary Section -->
       <section class="summary-section">
@@ -50,110 +63,210 @@
         </div>
       </section>
 
+      <!-- Worker Score Section -->
+      <div class="score-wrapper">
+        <div class="score-chip score">
+          <p class="grade">Оценка работника: {{ rating }}</p>
+        </div>
+        <div class="progress">
+          <div class="segment"></div>
+          <div class="segment"></div>
+          <div class="segment"></div>
+          <div class="segment"></div>
+          <div class="segment"></div>
+        </div>
+      </div>
+
       <!-- Skills Section -->
+      <!-- <section class="skills-section">
+        <h2 class="skills-title">Soft Skills</h2>
+        <section class="chart-section">
+          <canvas id="myRadarChart" class="radarChart"></canvas>
+        </section>
+        <h3 class="criteria-description">Описание критериев</h3>
+        <ul class="skills-list">
+          <li>Hummus</li>
+          <li>Pita</li>
+          <li>Green salad</li>
+          <li>Halloumi</li>
+        </ul>
+      </section> -->
       <section class="skills-section">
         <h2 class="skills-title">Soft Skills</h2>
+        <div class="chart-and-description">
+          <!-- Chart -->
+          <section class="chart-section">
+            <canvas id="myRadarChart" class="radarChart"></canvas>
+          </section>
+          <!-- Criteria Description -->
+          <div class="criteria-description">
+            <h3>Описание критериев</h3>
+            <ul class="skills-list">
+              <li>Hummus</li>
+              <li>Pita</li>
+              <li>Green salad</li>
+              <li>Halloumi</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
-      <section class="chart_section">
-        <canvas id="myRadarChart"></canvas>
-      </section>
 
       <section class="skills-section">
         <h2 class="skills-title">Hard Skills</h2>
+        <ul class="skills-list">
+          <li>Hummus</li>
+          <li>Pita</li>
+          <li>Green salad</li>
+          <li>Halloumi</li>
+        </ul>
       </section>
 
       <!-- Feedback Section -->
       <section class="feedback-section">
         <div class="feedback-content">
           <h2 class="feedback-title">Feedback</h2>
+          <!-- <ul class="feedback-list"> -->
+          <!-- <li>Pita</li>
+            <li>Green salad</li>
+            <li>Halloumi</li> -->
+          <!-- </ul> -->
           <section class="feedback-list">
             {% if feedback_list %}
-                <ul>
-                {% for feedback in feedback_list %}
-                    <li>{{ feedback.feedback_text }}</li>
-                {% endfor %}
-                </ul>
+            <ul>
+              {% for feedback in feedback_list %}
+              <li>{{ feedback.feedback_text }}</li>
+              {% endfor %}
+            </ul>
             {% else %}
-                <p>No feedback available for this employee.</p>
+            <p>No feedback available for this employee.</p>
             {% endif %}
-        </section>
+          </section>
         </div>
       </section>
     </div>
     <script>
-      const skills = {{soft_skills}};
+      const skills = {{ soft_skills }};
       const ctx = document.getElementById('myRadarChart').getContext('2d');
       const myRadarChart = new Chart(ctx, {
-          type: 'radar',
-          data: {
-              labels: [
-                  'Профессионализм',
-                  'Инициативность',
-                  'Работа в команде',
-                  'Лидерство',
-                  'Планирование',
-                  'Адаптивность',
-                  'Решительность',
-                  'Ответственность',
-                  'Целеустремленность',
-                  'Саморазвитие',
-                  'Коммуникация',
-              ],
-              datasets: [{
-                  label: 'Skills Rating',
-                  data: skills,
-                  backgroundColor: 'rgba(76, 175, 80, 0.5)',
-                  borderColor: 'rgba(76, 175, 80, 1)',
-                  borderWidth: 1,
-                  pointBackgroundColor: 'rgba(76, 175, 80, 1)',
-              }]
+        type: 'radar',
+        data: {
+          labels: [
+            'Профессионализм',
+            'Инициативность',
+            'Лидерство',
+            'Адаптивность',
+            'Ответственность',
+            'Целеустремленность',
+            'Саморазвитие',
+            'Коммуникация',
+            'Умение решать конфликты',
+            'Тайм-менеджмент'
+          ],
+          datasets: [{
+            label: 'Skills Rating',
+            data: skills,
+            backgroundColor: 'rgba(0, 119, 255, 0.5)',       // Blue color with 50% opacity
+            borderColor: 'rgba(0, 119, 255, 1)',             // Solid blue color for the border
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(0, 119, 255, 1)',    // Solid blue color for points
+          }]
+        },
+        options: {
+          maintainAspectRatio: true,
+          responsive: true,
+          scale: {
+            ticks: {
+              beginAtZero: true,
+              max: 5,
+              stepSize: 1
+            }
           },
-          options: {
-              scale: {
-                  ticks: {
-                      beginAtZero: true,
-                      max: 5, 
-                      stepSize: 1
-                  }
-              },
-              responsive: true,
-              plugins: {
-                  legend: {
-                      position: 'top',
-                  },
-              }
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
           }
+        }
       });
-  </script>
-  
-  <script>
+    </script>
+    
+    <!-- <script>
       function downloadPDF() {
-          const { jsPDF } = window.jspdf;
-          const doc = new jsPDF();
-  
-          const content = document.querySelector(".description-section");
-  
-          html2canvas(content, {
-              scale: 2, 
-          }).then(canvas => {
-              const imgData = canvas.toDataURL("image/png");
-              const imgWidth = 190; 
-              const pageHeight = 297; 
-              const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
-              let heightLeft = imgHeight;
-              let position = 0;
-  
-              while (heightLeft >= 0) {
-                  doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                  heightLeft -= pageHeight;
-                  position -= pageHeight;
-                  if (heightLeft > 0) doc.addPage();
-              }
-              doc.save("page.pdf"); 
-      });
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const content = document.querySelector(".main-content");
+
+        html2canvas(content, {
+          scale: 2,
+        }).then(canvas => {
+          const imgData = canvas.toDataURL("image/png");
+          const imgWidth = 190;
+          const pageHeight = 297;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+          let heightLeft = imgHeight;
+          let position = 0;
+
+          while (heightLeft >= 0) {
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+            position -= pageHeight;
+            if (heightLeft > 0) doc.addPage();
+          }
+          doc.save("page.pdf");
+        });
       }
+    </script> -->
+    <script>
+    function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Define margins and starting position
+  const margin = 10;
+  let yPosition = 10;
+
+  // Capture each section as a promise to ensure they all render before saving
+  const sections = [
+    { selector: ".info-card", label: "ID and Download/Update Buttons" },
+    { selector: ".score-wrapper", label: "Score and Scale" },
+    { selector: ".summary-section", label: "Summary" },
+    { selector: ".skills-section .chart-section", label: "Soft Skills Chart" },
+    { selector: ".skills-section .criteria-description", label: "Soft Skills Description" },
+    { selector: ".skills-section + .skills-section", label: "Hard Skills" }
+  ];
+
+  // Store promises for each canvas render
+  const sectionPromises = sections.map(section => {
+    const element = document.querySelector(section.selector);
+    if (element) {
+      return html2canvas(element, { scale: 2 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const imgWidth = 190; // Width in mm for A4
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        if (yPosition + imgHeight > doc.internal.pageSize.height) {
+          doc.addPage();  // Add a new page if space is insufficient
+          yPosition = margin;
+        }
+
+        doc.addImage(imgData, 'PNG', margin, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 10; // Adjust position for the next section
+      });
+    } else {
+      // Return a resolved promise if no element was found for that section
+      return Promise.resolve();
+    }
+  });
+
+  // Wait for all sections to render and be added to the PDF
+  Promise.all(sectionPromises).then(() => {
+    doc.save("employee_report.pdf");
+  });
+}
   </script>
   </main>
 </body>

@@ -1,7 +1,7 @@
 :root {
   --font-family-rethink-sans: 'Rethink Sans', sans-serif;
   --primary-color: #0077FF;
-  --background-color: #F2F3F5;
+  /* --background-color: #F2F3F5; */
   --text-color: #000000;
   --chip-update-bg: #000000;
   --chip-update-text: #FFFFFF;
@@ -27,30 +27,42 @@ body {
   align-items: center;
   padding: 1rem;
   background-color: var(--background-color);
+  border-bottom: 1.5px solid #E0E0E0;
 }
 
 .logo {
   font-size: 2rem;
+  font-weight: 600;
   color: var(--primary-color);
 }
 
 .button-container {
   display: flex;
   gap: 1rem;
+  margin-left: auto;
+}
+
+.criteria-description,
+.skills-list,
+.feedback-list,
+.info-chip.update,
+.score-chip,
+.info-chip.download,
+.button,
+.summary-text,
+.grade {
+  font-family: 'Nunito', sans-serif;
 }
 
 .button {
   padding: 0.5rem 1rem;
   border: 1px solid var(--text-color);
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   background-color: transparent;
   cursor: pointer;
   color: var(--text-color);
-}
-
-.search-button {
-  
+  font-size: 0.85rem;
 }
 
 /* Main Content */
@@ -63,71 +75,195 @@ body {
   margin: 0 7vw;
 }
 
-/* Info Section */
 .info-card {
+  padding-top: 3vh;
+  padding-bottom: 1vh;
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
+  align-items: center;
 }
 
 .info-chip {
-  padding: 0.5rem;
-  border-radius: 8px;
+  flex-basis: 33.33%;
+  /* Take up 1/3 of the width */
+  padding: 0.6rem;
   background-color: transparent;
   text-align: left;
 }
 
 .info-chip.score {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   text-align: left;
-  /* border: 0.5px solid var(--text-color); */
+}
+
+.main-button-container {
+  flex-basis: 66.66%;
+  /* Take up 2/3 of the width */
+  display: flex;
+  justify-content: flex-end;
+  /* Align buttons to the right */
+  gap: 1rem;
+  /* Control spacing between buttons */
+
+    align-items: center;
+}
+
+.info-chip.download {
+  min-width: 10vw;
+  max-width: 14vw;
+  background-color: var(--chip-update-bg);
+  color: var(--chip-update-text);
+  text-align: center;
+  /* margin-left: auto; */
+  border-radius: 9px;
 }
 
 .info-chip.update {
-  background-color: var(--chip-update-bg);
-  color: var(--chip-update-text);
-  text-align: right;
-  margin-left: auto;
+  min-width: 10vw;
+  max-width: 14vw;
+  border: 1.5px solid var(--primary-color);
+  border-radius: 9px;
+  color: var(--primary-color);
+  text-align: center;
+  /* margin-left: auto; */
 }
 
 .info-text {
-  /* font-size: 18px; */
   font-weight: bold;
   color: inherit;
+  padding-left: 1vw;
+  font-size: 2rem;
 }
 
-/* Summary Section */
-.summary-section {
-  margin-top: 1rem;
-  padding: 1rem;
+.button-text {
+  font-weight: bold;
+  color: inherit;
+  font-size: 0.95rem;
+  /* text-align: center; */
+}
+
+/* .progress {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+  height: 20px;
+  padding: 0 2px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.segment {
+  flex: 1;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin: 0 4px;
+}
+
+.segment:nth-child(n + 4) {
+  background-color: #ddd;
+} */
+
+.score-wrapper {
+  display: flex;
+  align-items: center;
+  padding-bottom: 3vh;
+  /* gap: 1rem; */
+  /* margin-top: 1rem; */
+}
+
+.info-chip.score {
+  flex-shrink: 0;
+}
+
+.score-chip {
+  flex-basis: 1%;
+  flex-shrink: 0;
+  padding: 0.6rem;
   background-color: transparent;
+  text-align: left;
+}
+
+.grade {
+  padding-left: 0.5vw;
+  font-weight: bold;
+  width: 20vw;
+}
+
+.progress {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+  height: 20px;
+  padding: 0 2px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.segment {
+  flex: 1;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin: 0 4px;
+} 
+
+.segment:nth-child(n + 4) {
+  background-color: #ddd;
+}
+
+.fill {
+  background-color: var(--primary-color);
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.summary-section {
+  padding: 1rem;
+  padding-top: 3vh;
 }
 
 .summary-title,
 .feedback-title,
 .skills-title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 500;
   color: var(--text-color);
 }
 
 .summary-text {
+  padding-top: 2vh;
   font-size: 1rem;
   color: var(--text-color);
 }
+
 
 /* Feedback Section */
 .feedback-section {
   margin-top: 1rem;
   padding: 1rem;
+  padding-top: 5vh;
+  padding-bottom: 7vh;
   background-color: transparent;
 }
 
 /* Skills Section */
+.chart-and-description {
+  padding-top: 2vh;
+  display: flex;
+  align-items: flex-start;
+  gap: 15vw;
+  /* Controls space between the chart and description */
+  margin-top: 1rem;
+}
+
 .skills-section {
   margin-top: 1rem;
   padding: 1rem;
   background-color: transparent;
+}
+
+.skills-title {
+  padding-top: 5vh;
+  /* padding-bottom: ; */
 }
 
 .skills-image {
@@ -135,9 +271,120 @@ body {
   height: auto;
 }
 
+.chart-section {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  justify-content: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 50vw;
+}
+
+.radarChart {
+  width: 100%;
+  height: auto;
+}
+
+
+.criteria-description {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.2rem;
+  /* font-weight: bold; */
+  margin-top: 1rem;
+  color: var(--text-color);
+  flex: 1;
+  max-width: 25vw;
+}
+
+.skills-list {
+  list-style-type: none;
+  /* Remove default bullets */
+  padding: 0;
+  /* Remove default padding */
+  margin-top: 0.5rem;
+}
+
+.skills-list li {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0.5rem 0;
+  font-weight: 400;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+}
+
+.skills-list li:last-child {
+  border-bottom: none;
+  /* Remove line from the last item */
+}
+
+.skills-list li::before {
+  content: "•";
+  /* Icon or bullet before each item */
+  color: var(--primary-color);
+  /* Use primary color for bullet */
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.criteria-description {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: var(--text-color);
+}
+
+.feedback-list {
+  list-style-type: none;
+  /* Remove default bullets */
+  padding: 0;
+  /* Remove default padding */
+  margin-top: 0.5rem;
+}
+
+.feedback-list li {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--text-color);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  /* Subtle separator line */
+}
+
+.feedback-list li:last-child {
+  border-bottom: none;
+  /* Remove line from the last item */
+}
+
+.feedback-list li::before {
+  content: "•";
+  /* Icon or bullet before each item */
+  color: var(--primary-color);
+  /* Use primary color for bullet */
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
 .extra-info {
   font-size: 1rem;
   line-height: 1.5;
   color: var(--text-color);
   margin-top: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .grade {
+    width: 30vw
+  }
+
+  .info-chip.download, .info-chip.update {
+    min-width: 18vw;
+    max-width: 21vw;
+  }
 }
