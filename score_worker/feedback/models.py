@@ -8,6 +8,7 @@ class Employee(models.Model):
 
 class Feedback(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='feedbacks')
+    employeeTo = models.CharField(max_length=10, default="394")
     feedback_text = models.TextField()
     
 class Rating(models.Model):

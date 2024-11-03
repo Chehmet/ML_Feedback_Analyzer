@@ -1,33 +1,143 @@
-/* static/styles.css */
+:root {
+  --font-family-rethink-sans: 'Rethink Sans', sans-serif;
+  --primary-color: #0077FF;
+  --background-color: #F2F3F5;
+  --text-color: #000000;
+  --chip-update-bg: #000000;
+  --chip-update-text: #FFFFFF;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+  background-color: var(--background-color);
+  font-family: var(--font-family-rethink-sans);
+  color: var(--text-color);
 }
 
-h1 {
-    color: #333;
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--background-color);
 }
 
-form {
-    margin-bottom: 20px;
+.logo {
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 
-input[type="text"], textarea, input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0;
-    box-sizing: border-box;
+.button-container {
+  display: flex;
+  gap: 1rem;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--text-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--text-color);
 }
 
-button:hover {
-    background-color: #45a049;
+.search-button {
+  
+}
+
+/* Main Content */
+.main-content {
+  padding: 1rem 0;
+}
+
+/* Wrapper to add 7vw left and right margin */
+.content-wrapper {
+  margin: 0 7vw;
+}
+
+/* Info Section */
+.info-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.info-chip {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: transparent;
+  text-align: left;
+}
+
+.info-chip.score {
+  flex-grow: 1;
+  text-align: left;
+  /* border: 0.5px solid var(--text-color); */
+}
+
+.info-chip.update {
+  background-color: var(--chip-update-bg);
+  color: var(--chip-update-text);
+  text-align: right;
+  margin-left: auto;
+}
+
+.info-text {
+  /* font-size: 18px; */
+  font-weight: bold;
+  color: inherit;
+}
+
+/* Summary Section */
+.summary-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+.summary-title,
+.feedback-title,
+.skills-title {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.summary-text {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+/* Feedback Section */
+.feedback-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+/* Skills Section */
+.skills-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+}
+
+.skills-image {
+  width: 100%;
+  height: auto;
+}
+
+.extra-info {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  margin-top: 1rem;
 }

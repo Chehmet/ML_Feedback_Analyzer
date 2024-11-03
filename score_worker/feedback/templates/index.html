@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+  rel="stylesheet">
+  
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <title>ScoreWorker</title>
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <p class="logo">ScoreWorker</p>
+    <div class="button-container">
+      <button class="button search-button" href="{% url 'main_page' %}">Поиск</button>
+      <button class="button feedback-button" href="{% url 'feedback_form' %}">Отзыв</button>
+      <button onclick=downloadPDF()>Скачать оценку в формате PDF</button>
+    </div>
+  </header>
+
+  <!-- Main Content with 7vw margin on left and right -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      <!-- User ID Section -->
+      <section class="info-card">
+        <div class="info-chip">
+          <p class="info-text">{{ employee.user_id }}</p>
+        </div>
+        <div class="info-chip score">
+          <p class="info-text">Worker Score: {{ rating }</p>
+        </div>
+        <div class="info-chip update">
+          <p class="info-text">Обновить данные</p>
+        </div>
+      </section>
+
+      <!-- Summary Section -->
+      <section class="summary-section">
+        <div class="summary-content">
+          <h2 class="summary-title">Summary</h2>
+          <p class="summary-text">{{ summary.summary_text }}</p>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="skills-section">
+        <h2 class="skills-title">Soft Skills</h2>
+      </section>
+
+      <section class="chart_section">
+        <canvas id="myRadarChart"></canvas>
+      </section>
+
+      <section class="skills-section">
+        <h2 class="skills-title">Hard Skills</h2>
+      </section>
+
+      <!-- Feedback Section -->
+      <section class="feedback-section">
+        <div class="feedback-content">
+          <h2 class="feedback-title">Feedback</h2>
+          <section class="feedback-list">
+            {% if feedback_list %}
+                <ul>
+                {% for feedback in feedback_list %}
+                    <li>{{ feedback.feedback_text }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No feedback available for this employee.</p>
+            {% endif %}
+        </section>
+        </div>
+      </section>
+    </div>
+    <script>
+      const skills = {{soft_skills}};
+      const ctx = document.getElementById('myRadarChart').getContext('2d');
+      const myRadarChart = new Chart(ctx, {
+          type: 'radar',
+          data: {
+              labels: [
+                  'Профессионализм',
+                  'Инициативность',
+                  'Работа в команде',
+                  'Лидерство',
+                  'Планирование',
+                  'Адаптивность',
+                  'Решительность',
+                  'Ответственность',
+                  'Целеустремленность',
+                  'Саморазвитие',
+                  'Коммуникация',
+              ],
+              datasets: [{
+                  label: 'Skills Rating',
+                  data: skills,
+                  backgroundColor: 'rgba(76, 175, 80, 0.5)',
+                  borderColor: 'rgba(76, 175, 80, 1)',
+                  borderWidth: 1,
+                  pointBackgroundColor: 'rgba(76, 175, 80, 1)',
+              }]
+          },
+          options: {
+              scale: {
+                  ticks: {
+                      beginAtZero: true,
+                      max: 5, 
+                      stepSize: 1
+                  }
+              },
+              responsive: true,
+              plugins: {
+                  legend: {
+                      position: 'top',
+                  },
+              }
+          }
+      });
+  </script>
+  
+  <script>
+      function downloadPDF() {
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+  
+          const content = document.querySelector(".description-section");
+  
+          html2canvas(content, {
+              scale: 2, 
+          }).then(canvas => {
+              const imgData = canvas.toDataURL("image/png");
+              const imgWidth = 190; 
+              const pageHeight = 297; 
+              const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+              let heightLeft = imgHeight;
+              let position = 0;
+  
+              while (heightLeft >= 0) {
+                  doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                  heightLeft -= pageHeight;
+                  position -= pageHeight;
+                  if (heightLeft > 0) doc.addPage();
+              }
+              doc.save("page.pdf"); 
+      });
+      }
+  </script>
+  </main>
+</body>
+</html>

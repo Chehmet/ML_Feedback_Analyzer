@@ -23,4 +23,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('main/', views.main_page, name='main_page'),
     path('employee/<int:employee_id>/', views.employee_detail, name='employee_detail'),
+    path('feedback_form/', views.feedback_form, name='feedback_form'),
 ]

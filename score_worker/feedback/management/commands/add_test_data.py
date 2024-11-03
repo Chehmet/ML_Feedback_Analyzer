@@ -22,10 +22,10 @@ class Command(BaseCommand):
         employee3 = Employee.objects.create(user_id="8800", password=make_password("password8800"))
 
         # Create feedback for employees
-        Feedback.objects.create(employee=employee1, feedback_text="Great work on the project!")
-        Feedback.objects.create(employee=employee1, feedback_text="Needs improvement in communication.")
-        Feedback.objects.create(employee=employee2, feedback_text="Outstanding creativity!")
-        Feedback.objects.create(employee=employee3, feedback_text="Excellent teamwork.")
+        Feedback.objects.create(employee=employee1, employeeTo="274", feedback_text="Great work on the project!")
+        Feedback.objects.create(employee=employee1, employeeTo="8800", feedback_text="Needs improvement in communication.")
+        Feedback.objects.create(employee=employee2, employeeTo="394", feedback_text="Outstanding creativity!")
+        Feedback.objects.create(employee=employee3, employeeTo="274", feedback_text="Excellent teamwork.")
 
         # Create summaries for employees
         Summary.objects.create(employee=employee1, summary_text="Alice has shown excellent problem-solving skills.")

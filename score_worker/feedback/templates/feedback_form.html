@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provide Feedback</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
-    <title>Login</title>
     <style>
         body {
             font-family: Rethink Sans;
@@ -19,13 +19,13 @@
         }
         .container {
             text-align: center;
-            background-color: #F5F5F5;
+            background-color: #fff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 350px;
         }
-        h2 {
+        h1 {
             font-size: 32px;
             color: #000000;
             margin-bottom: 20px;
@@ -36,26 +36,32 @@
         }
         label {
             font-size: 14px;
-            color: #333;
+            color: #000000;
             display: block;
             margin-bottom: 5px;
         }
-        .form-input {
+        .form-input, .form-textarea {
             width: 100%;
             padding: 10px;
-            border-radius: 18px;
+            border-radius: 25px;
             border: 1px solid #ddd;
             outline: none;
             font-size: 16px;
             box-sizing: border-box;
         }
-        .form-input::placeholder {
+        .form-textarea {
+            border-radius: 10px;
+            resize: vertical;
+            height: 100px;
+            padding: 10px;
+        }
+        .form-input::placeholder, .form-textarea::placeholder {
             color: #aaa;
         }
         .submit-button {
             width: 100%;
             padding: 10px;
-            border-radius: 18px;
+            border-radius: 25px;
             background-color: #0077FF;
             border: none;
             color: white;
@@ -66,34 +72,30 @@
         .submit-button:hover {
             background-color: #0077FF;
         }
-        .message {
-            color: red;
-            font-size: 14px;
-            margin-top: 15px;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Вход в систему</h2>
-    <form method="post" action="{% url 'login' %}">
+    <h1>Provide Feedback</h1>
+    <form method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="user_id"></label>
-            <input type="text" id="user_id" name="user_id" class="form-input" placeholder="Введите ID" required>
+            <label for="id_from">Your ID:</label>
+            <input type="text" id="id_from" name="id_from" class="form-input" placeholder="Enter your ID" required>
         </div>
         <div class="form-group">
-            <label for="password"></label>
-            <input type="password" id="password" name="password" class="form-input" placeholder="Введите пароль" required>
+            <label for="id_to">Employee ID to Provide Feedback:</label>
+            <input type="text" id="id_to" name="id_to" class="form-input" placeholder="Enter Employee ID" required>
         </div>
-        <button type="submit" class="submit-button">Войти</button>
+        <div class="form-group">
+            <label for="feedback_text">Feedback:</label>
+            <textarea id="feedback_text" name="feedback_text" class="form-textarea" placeholder="Write your feedback here..." required></textarea>
+        </div>
+        <button type="submit" class="submit-button">Submit Feedback</button>
     </form>
-
-    {% for message in messages %}
-        <p class="message">{{ message }}</p>
-    {% endfor %}
 </div>
 
 </body>
 </html>
+

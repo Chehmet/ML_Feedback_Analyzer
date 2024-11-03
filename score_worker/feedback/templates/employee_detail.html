@@ -1,42 +1,57 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Skills Balance Wheel</title>
+    <title>Оценка сотрудника</title>
+    <link rel="stylesheet" href="{% static 'employee_style.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        canvas {
-            max-width: 400px;
-            max-height: 400px;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Employee: {{ employee.user_id }}</h1>
-        <p><strong>Average Rating:</strong> {{ rating }}</p>
+    <header>
+        <div class="navbar">
+            <a href="{% url 'feedback_form' %}">Написать оценку</a>
+            <a href="{% url 'main_page' %}">Назад</a>
+            <button onclick=downloadPDF()>Скачать оценку в формате PDF</button>
+        </div>
+    </header> 
+    <div class="description-section">
+        <h1>ID сотрудника: {{ employee.user_id }}</h1>
+        <p><strong>Числовая оценка:</strong> {{ rating }}</p>
 
         {% if summary %}
-            <p><strong>Summary:</strong> {{ summary.summary_text }}</p>
+            <p><strong>Резюме отзывов:</strong> {{ summary.summary_text }}</p>
         {% endif %}
 
-        <h1>Social Skills Balance Wheel</h1>
-        <canvas id="myRadarChart"></canvas>
+        <h1>Колесо баланса soft skills</h1>
+        <section class="chart_section">
+            <canvas id="myRadarChart"></canvas>
+        </section>
+
+        <h3>Описание критериев оценки:</h3>
+        <ul class="criteria-list">
+            <li><strong>Communication:</strong> Ability to effectively share information.</li>
+            <li><strong>Teamwork:</strong> Collaborates well with team members.</li>
+            <li><strong>Problem Solving:</strong> Tackles challenges effectively.</li>
+            <li><strong>Adaptability:</strong> Adjusts to changes smoothly.</li>
+        </ul>
+
+        <h3>Feedback List:</h3>
+        <section class="feedback-list">
+            {% if feedback_list %}
+                <ul>
+                {% for feedback in feedback_list %}
+                    <li>{{ feedback.feedback_text }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No feedback available for this employee.</p>
+            {% endif %}
+        </section>
+        
     </div>
 
     <script>
@@ -71,7 +86,7 @@
                 scale: {
                     ticks: {
                         beginAtZero: true,
-                        max: 5, // Assuming max rating is 5
+                        max: 5, 
                         stepSize: 1
                     }
                 },
@@ -84,5 +99,35 @@
             }
         });
     </script>
+
+    <script>
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const content = document.querySelector(".description-section");
+
+            html2canvas(content, {
+                scale: 2, 
+            }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const imgWidth = 190; 
+                const pageHeight = 297; 
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                while (heightLeft >= 0) {
+                    doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                    position -= pageHeight;
+                    if (heightLeft > 0) doc.addPage();
+                }
+                doc.save("page.pdf"); 
+        });
+        }
+    </script>
+
 </body>
 </html>
