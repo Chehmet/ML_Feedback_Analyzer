@@ -4,7 +4,7 @@
 
 ## Описание проекта
 
-Основная задача **ScoreWorker** — создание динамичной системы отзывов, которая позволяет:
+Основная задача **ScoreWorker** — создание динамичной системы, которая позволяет:
 - **Суммировать оценки сотрудников** на основе обратной связи.
 - **Оценивать навыки по заданным критериям**.
 - **Выделять технические навыки (hard skills)**, указанные в отзывах.
@@ -44,87 +44,9 @@
 
 - **Бэкенд**: Django
 - **Фронтенд**: HTML, CSS, JavaScript
-- **Машинное обучение**: Bart-embedder, prompt-engineering
+- **Продвинутые техники больших языковых моделей**: Bart-embedder, prompt-engineering
 - **Обработка данных**: Python с использованием API для продвинутого анализа текста
 - **Дизайн**: Figma для прототипирования интерфейса
-
----
-
-## Описание кода
-
-### 1. Оценка компетенций
-
-```python
-import json
-from typing import List, Dict
-
-competencies = [
-    "Профессионализм", "Инициативность", "Умение решать конфликты", "Лидерство", 
-    "Таймменеджмент", "Адаптивность", "Ответственность", "Целеустремленность", 
-    "Саморазвитие", "Коммуникация"
-]
-
-def evaluate_competencies(reviews: List[str], api_url: str) -> Dict[str, Dict[str, str]]:
-    prompt = f"Учитывая отзывы, определите присутствие компетенций и оцените их."
-    data = {
-        "prompt": [prompt],
-        "apply_chat_template": True,
-        "system_prompt": "Анализ компетенций сотрудников.",
-        "max_tokens": 4096,
-        "temperature": 0.2,
-    }
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(api_url, data=json.dumps(data), headers=headers)
-    return json.loads(response.text)
-```
-
-### 2. Извлечение hard skills
-
-```python
-def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
-    prompt = f"Извлеките hard skills из следующих отзывов: {reviews}."
-    data = {
-        "prompt": [prompt],
-        "apply_chat_template": False,
-        "max_tokens": 100,
-        "temperature": 0.2,
-    }
-    response = requests.post(api_url, data=json.dumps(data), headers={"Content-Type": "application/json"})
-    return json.loads(response.text)
-```
-
-### 3. Анализ самооценки
-
-```python
-def analyze_review_style(api_url, self_reviews, summary, worker_id) -> str:
-    prompt = f"Проанализируй самооценку сотрудника {worker_id}. Описание: {summary}."
-    data = {
-        "prompt": [prompt],
-        "apply_chat_template": True,
-        "max_tokens": 200,
-        "temperature": 0.2
-    }
-    response = requests.post(api_url, data=json.dumps(data), headers={"Content-Type": "application/json"})
-    return response.text
-```
-
-### 4. Генерация отчета
-
-Функция генерации отчета объединяет оценки компетенций, выделенные hard skills и краткое резюме в структурированный отчет.
-
-```python
-def get_report(worker_id, reviews=None):
-    competencies = get_competencies(worker_id, reviews)
-    hard_skills = get_hardskills(worker_id, reviews)
-    score = calculate_score(competencies)
-
-    data = {
-        'competencies': competencies,
-        'hard skills': hard_skills,
-        'score': score,
-    }
-    return data
-```
 
 ---
 
