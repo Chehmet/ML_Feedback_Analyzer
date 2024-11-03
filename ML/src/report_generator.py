@@ -16,11 +16,7 @@ load_dotenv()
 api = os.getenv("API_URL")
 
 def get_self_feedback(summary, worker_id):
-    if not summary:
-        summary = get_summary(worker_id)
-
     self_feedback = analyze_self_review(api, summary, worker_id)
-    
     return self_feedback
 
 def get_written_by_person(worker_id):
