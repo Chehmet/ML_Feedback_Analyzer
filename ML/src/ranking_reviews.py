@@ -5,7 +5,7 @@ import time
 import json
 import os
 from sklearn.cluster import KMeans
-from sentence_transformers import SentenceTransformer
+import requests
 
 from .preprocessing import clean_text
 # from preprocessing import clean_text
@@ -13,7 +13,6 @@ from .preprocessing import clean_text
 
 device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=device)
-embedding_model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 
 
 criteria_labels = {
@@ -25,6 +24,26 @@ criteria_labels = {
     'detail': ['подробный', 'не подробный']
 }
 
+def embedings_generator(reviews):
+    url = os.getenv("EMBEDDER_URL")
+    data = {
+        "inputs": reviews,
+        "normalize": True,
+        "truncate": False
+    }
+    try:
+        response = requests.post(url, json=data)
+
+        if response.status_code == 200:
+            embedding = response.json()
+            return embedding
+        else:
+            print("Error:", response.status_code, response.text)
+            return response.status_code
+
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        return e
 
 def get_reviews(worker_id):
     dataset_path = os.getenv("DATASET_DIR")
@@ -43,7 +62,6 @@ def get_reviews(worker_id):
     ]
 
     return reviews
-
 
 def evaluate_review(review):
     total_score = 0.0
@@ -80,7 +98,7 @@ def retrieve_clustered_reviews(worker_id, k=15):
     useful_reviews = [review for review in useful_reviews if len(review['review'].split()) > 15]
 
     review_texts = [review['review'] for review in useful_reviews]
-    embeddings = embedding_model.encode(review_texts)
+    embeddings = embedings_generator(review_texts)
 
     # Кластеризация
     n_clusters = min(k, len(useful_reviews))  # Число кластеров не больше, чем количество отзывов
