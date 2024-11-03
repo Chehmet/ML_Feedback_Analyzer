@@ -86,9 +86,12 @@ with open(db, 'r', encoding='utf-8') as file:
 #         print(review)
 
 api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
-worker_id = 6135
-reviews = get_reviews(worker_id)
+worker_id = 105560
+print("___________________")
+reviews = get_list_useful_reviews(worker_id)
+print("___________________")
 competency_evaluation = evaluate_competencies(reviews, api_url)
+print("___________________")
 print(competency_evaluation)
 for i in range(len(competency_evaluation)):
     print(competency_evaluation[i])
