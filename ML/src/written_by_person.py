@@ -3,17 +3,20 @@
 import requests
 import json
 import time
-# from utils import *
+from utils import *
 
 
-def get_reviews_written_by_person(ds_reviews, worker_id):
+def get_reviews_written_by_person(worker_id):
+    ds_reviews = get_all_reviews()
+
     return [
         item['review']
         for item in ds_reviews
         if item['ID_reviewer'] == worker_id and not item['ID_under_review'] == worker_id
     ]
 
-def analyze_review_style(api_url, reviews, worker_id) -> str:
+def analyze_review_style(api_url, worker_id) -> str:
+    reviews = get_reviews_written_by_person(worker_id)
     reviews_text = " ".join(reviews)
     
     # Construct the prompt to analyze the tone of reviews
@@ -50,20 +53,3 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
         error_message = f"Error: {response.status_code} - {response.text}"
         print(error_message)
         return error_message
-
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Replace with actual API URL
-worker_id = 28
-ds = r'dataset\review_dataset.json'
-# ds = '../dataset/sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
-
-s = time.time()
-reviews = get_reviews_written_by_person(ds_reviews, worker_id)
-
-writer_style = analyze_review_style(api_url, reviews, worker_id)
-
-print(writer_style)
-e = time.time()
-print(f"\nExecution time: {e-s:.2f} sec")
