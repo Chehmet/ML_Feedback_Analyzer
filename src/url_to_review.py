@@ -75,7 +75,7 @@ def save_to_json(data, filepath):
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-db = get_all_reviews()[:100]
+db = get_all_reviews()
 
 # Вызов функции, чтобы делать айди для каждого ревью
 # db_with_ids = add_unique_ids_to_reviews(db)
