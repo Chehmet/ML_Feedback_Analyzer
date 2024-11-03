@@ -39,7 +39,7 @@ def preprocess_reviews(data, url):
         tokens_before = len(entry.split())
         cnt_b += tokens_before
         # Убираем текст в квадратных скобках и очищаем пробелы
-        clean_text = re.sub(r"\[.*?\]", "", entry)
+        clean_text = re.sub(r"\[.*?\]", "сотрудник", entry)
         clean_text = clean_text.replace("\n", "").replace("/", "").replace("-", "").replace("  ", " ")
         clean_text = re.sub(r"\s+", " ", clean_text).strip()
         
