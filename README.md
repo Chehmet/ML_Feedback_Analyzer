@@ -168,7 +168,7 @@ def get_report(worker_id, reviews=None):
 
 1. **Склонируйте репозиторий**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Chehmet/InnoglobalHack.git
    ```
 2. **Установите зависимости**:
    ```bash
