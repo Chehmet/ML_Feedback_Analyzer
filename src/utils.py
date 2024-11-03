@@ -4,8 +4,10 @@ import ast
 from dotenv import load_dotenv
 import os
 import re
+from ranking_reviews import retrieve_clustered_reviews
 
 load_dotenv()
+
 
 def get_reviews(worker_id):
     dataset_path = os.getenv("DATASET_DIR")
@@ -18,7 +20,16 @@ def get_reviews(worker_id):
         for item in ds_reviews
         if item['ID_under_review'] == worker_id
         and item['ID_reviewer'] != worker_id
-    ][:10]
+    ]
+
+
+def get_useful_reviews(worker_id):
+    return retrieve_clustered_reviews(worker_id)
+
+
+def get_list_useful_reviews(worker_id):
+    reviews = get_useful_reviews(worker_id)
+    return [review['review'] for review in reviews]
 
 
 def extract_list(text):
@@ -47,4 +58,3 @@ def get_response(api_url, data, headers):
             return e
     else:
         return f"Error: {response.status_code} - {response.text}"
-    
