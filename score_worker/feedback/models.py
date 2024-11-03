@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 
 class Employee(models.Model):
     user_id = models.CharField(max_length=10, default="394")
-    password = models.CharField(max_length=128, default="password123")
+    password = models.CharField(max_length=128, default=make_password("password123"))
     last_login = models.DateTimeField(null=True, blank=True)
 
 class Feedback(models.Model):

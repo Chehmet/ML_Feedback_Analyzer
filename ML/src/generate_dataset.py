@@ -5,7 +5,13 @@ import json
 
 dataset = get_all_reviews()
 
-worker_id_set = {6135, 23176} # store all the worker_ids from dataset
+worker_id_set ={56325, 25098, 6159, 6164, 26142, 17439, 31, 37413, 6185, 18480} # store all the worker_ids from dataset
+# worker_id_set = set()
+
+# for item in dataset:
+#     worker_id_set.add(item['ID_under_review'])
+
+# print(worker_ids)
 
 workers_info = [None for _ in range(len(worker_id_set))]
 i = 0

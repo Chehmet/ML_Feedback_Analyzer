@@ -47,8 +47,8 @@
 
 - **Бэкенд**: Django, Python, SQLite
 - **Фронтенд**: HTML, CSS, JavaScript
-- **Продвинутые техники больших языковых моделей**: классификатор(facebook/bart-large-mnli), prompt-engineering, перефразирование и эмбеддинги
-- **Обработка данных**: Python, API, NLP, transoformer(zero-shot, paraphrase-multilingual-MiniLM-L12-v2), кластеризация(KMeans), Torch, SOTA
+- **Продвинутые техники больших языковых моделей**: PyTorch, LLM API (llama70B), bart-large-mnli и zero-shot классификаторы, prompt-engineering, embedder (multilingual-e5-large)
+- **Обработка данных**: Python, NLP, transformers (paraphrase-multilingual-MiniLM-L12-v2), кластеризация (KMeans)
 - **Дизайн**: Figma
 
 ---
@@ -106,6 +106,7 @@
    Создайте файл `.env` в корне проекта и заполните поля ниже
    ```
    DATASET_DIR = ""
+   WORKER_DATASET_DIR = ""
    API_URL = ""
    API_URL_BACKUP = ""
    ```
