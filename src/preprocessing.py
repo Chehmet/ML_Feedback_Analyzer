@@ -4,6 +4,16 @@ import time
 from utils import *
 
 
+def remove_non_utf8(text):
+    cleaned_text = text.encode("utf-8", "ignore").decode("utf-8")
+    return cleaned_text
+
+
+def clean_text(text):
+    cleaned_text = re.sub(r'\[.*?\]', '', text)
+    return ' '.join(cleaned_text.split())
+
+
 def is_relevant(review):
     # Определение ключевых слов и критериев для нерелевантных отзывов
     irrelevant_keywords = [
@@ -60,20 +70,28 @@ def preprocess_reviews(data, url):
 
 
 
-ds = r'dataset\review_dataset.json'
+# ds = r'dataset\review_dataset.json'
 
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
-    # print(ds_reviews)
-# all_reviews = [item["review"] for item in ds_reviews]
+# with open(ds, 'r', encoding='utf-8') as file:
+#     ds_reviews = json.load(file)
+#     # print(ds_reviews)
+# # all_reviews = [item["review"] for item in ds_reviews]
 
-worker_id = 6135
-api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
+# worker_id = 6135
+# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
 
-s = time.time()
-reviews = get_reviews(ds_reviews, worker_id)
-preprocessed = preprocess_reviews(reviews, api_url)
-print(preprocessed)
-e = time.time()
+# s = time.time()
+# reviews = get_reviews(ds_reviews, worker_id)
+# preprocessed = preprocess_reviews(reviews, api_url)
+# print(preprocessed)
+# e = time.time()
 
-print(f"\nExecution time: {e-s:.2f} sec")
+# print(f"\nExecution time: {e-s:.2f} sec")
+
+
+
+# text = "[ИМЯ] -- это искреннее уважение и признательность за профессионализм.\n\nЭкспертиза в области управления доступами действительно высочайшего уровня, что неоднократно подтверждалось успешным решением сложнейших задач. Его подход к делу внушает уверенность в том, что вопросы информационной безопасности нашей компании находятся под надежной защитой.\n\nОтдельно хочу отметить доброжелательное отношение к коллегам и готовность всегда прийти на помощь, несмотря на плотный график и высокую занятость. Такое сочетание профессионализма и человечности делает работу с [ИМЯ] не только продуктивной, но и приятной.\n\nСотрудничество с ним даёт чувство уверенности, так что я убеждён, что под его руководством наша информационная безопасность будет только крепнуть."
+
+# print(text)
+# text = clean_text(text)
+# print(text)

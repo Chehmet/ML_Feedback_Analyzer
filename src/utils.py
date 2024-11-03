@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import re
 from ranking_reviews import retrieve_clustered_reviews
+from preprocessing import clean_text
 
 load_dotenv()
 
@@ -12,15 +13,20 @@ load_dotenv()
 def get_reviews(worker_id):
     dataset_path = os.getenv("DATASET_DIR")
 
-    with open(dataset_path, 'r', encoding='utf-8') as file:
+    with open(dataset_path, 'r', encoding='utf-8', errors='ignore') as file:
         ds_reviews = json.load(file)
 
-    return [
-        item['review']
+    reviews = [
+        {
+            key: clean_text(value) if isinstance(value, str) else value
+            for key, value in item.items()
+        }
         for item in ds_reviews
         if item['ID_under_review'] == worker_id
         and item['ID_reviewer'] != worker_id
     ]
+
+    return reviews
 
 
 def get_useful_reviews(worker_id):

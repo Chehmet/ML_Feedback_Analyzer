@@ -6,6 +6,7 @@ import json
 import os
 from sklearn.cluster import KMeans
 from sentence_transformers import SentenceTransformer
+from preprocessing import clean_text
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
@@ -26,15 +27,20 @@ criteria_labels = {
 def get_reviews(worker_id):
     dataset_path = os.getenv("DATASET_DIR")
 
-    with open(dataset_path, 'r', encoding='utf-8') as file:
+    with open(dataset_path, 'r', encoding='utf-8', errors='ignore') as file:
         ds_reviews = json.load(file)
 
-    return [
-        item
+    reviews = [
+        {
+            key: clean_text(value) if isinstance(value, str) else value
+            for key, value in item.items()
+        }
         for item in ds_reviews
         if item['ID_under_review'] == worker_id
         and item['ID_reviewer'] != worker_id
     ]
+
+    return reviews
 
 
 def evaluate_review(review):
