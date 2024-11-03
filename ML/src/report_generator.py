@@ -4,13 +4,28 @@
 from summary_generator import generate_summary
 from competency_scoring import evaluate_competencies
 from hard_skills_generator import extract_hard_skills
+from self_review import analyze_review_style
 from utils import *
 from dotenv import load_dotenv
 import time
+import os
 
 
 load_dotenv()
 api = os.getenv("API_URL")
+
+def get_self_feedback(summary, worker_id):
+    if not summary:
+        summary = get_summary(worker_id)
+    else:
+        self_feedback = analyze_self_review(api, summary, worker_id)
+    return self_feedback
+
+def get_written_by_person(worker_id):
+    written_by_feedback = analyze_review_style(api, worker_id)
+    return written_by_feedback
+
+
 
 
 def get_summary(worker_id, reviews=None):
