@@ -51,7 +51,7 @@ def url_review(citate, db):
         str: Unique hash ID of the review containing the citation, or None if not found.
     """
     for review in db:
-        if citate in review['review']:
+        if citate.lower() in review['review'].lower():
             if 'review_id' in review and review['review_id']:
                 return review["review_id"]
             else: # Generate and return the hash for the matching review
@@ -72,7 +72,7 @@ def save_to_json(data, filepath):
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
-db = r'dataset\review_dataset.json'
+db = r'dataset\new_dataset.json'
 with open(db, 'r', encoding='utf-8') as file:
     db = json.load(file)
 
@@ -92,9 +92,11 @@ reviews = get_list_useful_reviews(worker_id)
 print("___________________")
 competency_evaluation = evaluate_competencies(reviews, api_url)
 print("___________________")
-print(competency_evaluation)
-for i in range(len(competency_evaluation)):
-    print(competency_evaluation[i])
+# print(competency_evaluation)
+for i in competency_evaluation:
+    citate = i["confirmation"]
+    review_id = url_review(citate, db)
+    print(review_id)
 # citate = "Оперативно, понятно, просто и без лишней боли"
 # review_id = url_review(citate, db)
 # print("Review ID for citation:", review_id)
