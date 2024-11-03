@@ -4,10 +4,20 @@ import ast
 from dotenv import load_dotenv
 import os
 import re
+
 from .ranking_reviews import retrieve_clustered_reviews
 from .preprocessing import clean_text
+# from ranking_reviews import retrieve_clustered_reviews
+# from preprocessing import clean_text
 
 load_dotenv()
+
+
+def find_worker_by_id(worker_id, data):
+    for worker in data:
+        if worker.get("worker_id") == worker_id:
+            return worker
+    return None
 
 
 def get_all_reviews():

@@ -1,8 +1,10 @@
 import json
 from typing import List, Dict
 import time
-from .utils import *
 import ast
+
+from .utils import *
+# from utils import *
 
 
 # Определение компетенций
