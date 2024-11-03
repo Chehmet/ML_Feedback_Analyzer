@@ -16,10 +16,35 @@ load_dotenv()
 api = os.getenv("API_URL")
 
 def get_self_feedback(summary, worker_id):
+    """
+    Получает анализ самооценки сотрудника.
+
+    Эта функция использует модуль self_review для анализа самооценки сотрудника
+    на основе предоставленной сводки и ID сотрудника.
+
+    Аргументы:
+    summary (str): Сводка о сотруднике
+    worker_id (int): ID сотрудника
+
+    Возвращает:
+    str: Анализ самооценки сотрудника
+    """
     self_feedback = analyze_self_review(api, summary, worker_id)
     return self_feedback
 
 def get_written_by_person(worker_id):
+    """
+    Получает анализ стиля написания отзывов сотрудником.
+
+    Эта функция использует модуль written_by_person для анализа стиля и тона отзывов,
+    написанных сотрудником о других сотрудниках.
+
+    Аргументы:
+    worker_id (int): ID сотрудника
+
+    Возвращает:
+    str: Анализ стиля написания отзывов сотрудником
+    """
     written_by_feedback = analyze_review_style(api, worker_id)
     return written_by_feedback
 
