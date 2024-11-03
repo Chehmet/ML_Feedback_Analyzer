@@ -10,6 +10,23 @@ from preprocessing import clean_text
 load_dotenv()
 
 
+def get_all_reviews():
+    dataset_path = os.getenv("DATASET_DIR")
+
+    with open(dataset_path, 'r', encoding='utf-8', errors='ignore') as file:
+        reviews = json.load(file)
+
+    reviews = [
+        {
+            key: clean_text(value) if key == 'review' else value
+            for key, value in item.items()
+        }
+        for item in reviews
+    ]
+
+    return reviews
+
+
 def get_reviews(worker_id):
     dataset_path = os.getenv("DATASET_DIR")
 
