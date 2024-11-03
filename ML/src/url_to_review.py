@@ -92,7 +92,7 @@ def get_competency_references(worker_id):
     """
     db = get_all_reviews()
     reviews = get_list_useful_reviews(worker_id)
-    url = os.getenv("EMBEDDER_URL")
+    url = os.getenv("API_URL")
     competency_evaluation = evaluate_competencies(reviews, url)
     for i in range(len(competency_evaluation)):
         citate = competency_evaluation[i]["confirmation"]

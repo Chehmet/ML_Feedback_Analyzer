@@ -5,7 +5,8 @@ import requests
 import json
 import time
 # from utils import *
-
+from dotenv import load_dotenv
+import os
 
 def get_self_reviews(ds_reviews, worker_id):
     """
@@ -72,8 +73,8 @@ def analyze_review_style(api_url, self_rewiews, summary, worker_id) -> str:
         print(error_message)
         return error_message
 
-# Example usage of the function
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Replace with actual API URL
+load_dotenv()
+api_url = os.getenv("API_URL")
 worker_id = 28
 # ds = r'dataset\review_dataset.json'
 ds = '../dataset/sample_reviews.json'
