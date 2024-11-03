@@ -4,7 +4,8 @@
 from summary_generator import generate_summary
 from competency_scoring import evaluate_competencies
 from hard_skills_generator import extract_hard_skills
-from self_review import analyze_review_style
+from self_review import analyze_self_review
+from written_by_person import analyze_review_style
 from utils import *
 from dotenv import load_dotenv
 import time
@@ -24,8 +25,6 @@ def get_self_feedback(summary, worker_id):
 def get_written_by_person(worker_id):
     written_by_feedback = analyze_review_style(api, worker_id)
     return written_by_feedback
-
-
 
 
 def get_summary(worker_id, reviews=None):
