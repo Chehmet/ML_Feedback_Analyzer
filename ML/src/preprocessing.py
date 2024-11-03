@@ -1,3 +1,6 @@
+"""
+Модуль для предварительной обработки и очистки текстовых отзывов.
+"""
 import re
 import json
 import time
@@ -7,17 +10,43 @@ from utils import *
 
 
 def remove_non_utf8(text):
+    """
+    Удаляет символы, не соответствующие кодировке UTF-8.
+
+    Аргументы:
+    text (str): Исходный текст
+
+    Возвращает:
+    str: Очищенный текст, содержащий только UTF-8 символы
+    """
     cleaned_text = text.encode("utf-8", "ignore").decode("utf-8")
     return cleaned_text
 
 
 def clean_text(text):
+    """
+    Очищает текст от содержимого в квадратных скобках и лишних пробелов.
+
+    Аргументы:
+    text (str): Исходный текст
+
+    Возвращает:
+    str: Очищенный текст
+    """
     cleaned_text = re.sub(r'\[.*?\]', '', text)
     return ' '.join(cleaned_text.split())
 
 
 def is_relevant(review):
-    # Определение ключевых слов и критериев для нерелевантных отзывов
+    """
+    Определяет, является ли отзыв релевантным на основе ключевых слов и длины.
+
+    Аргументы:
+    review (str): Текст отзыва
+
+    Возвращает:
+    bool: True, если отзыв релевантный, False в противном случае
+    """
     irrelevant_keywords = [
         "лучший", "классный человек", "сотрудничество",
         "молодец", "умница", "отличный", "спасибо", "рекомендую", "ужасный", "плохой"
@@ -33,13 +62,37 @@ def is_relevant(review):
 
 
 def remove_stopwords(text, stopwords):
-    # Убираем все стоп-слова из текста
+    """
+    Удаляет стоп-слова из текста.
+
+    Аргументы:
+    text (str): Исходный текст
+    stopwords (set): Набор стоп-слов для удаления
+
+    Возвращает:
+    str: Текст без стоп-слов
+    """
     words = text.split()
     filtered_words = [word for word in words if word.lower() not in stopwords]
     return " ".join(filtered_words)
 
 def preprocess_reviews(data, url):
-    # Определяем список стоп-слов (предлоги, союзы и прочие)
+    """
+    Выполняет предварительную обработку списка отзывов.
+
+    Эта функция применяет ряд операций очистки и фильтрации к каждому отзыву:
+    - Удаление текста в квадратных скобках
+    - Очистка от лишних пробелов и специальных символов
+    - Удаление стоп-слов
+    - Проверка релевантности отзыва
+
+    Аргументы:
+    data (list): Список исходных отзывов
+    url (str): URL API (не используется в текущей версии функции)
+
+    Возвращает:
+    list: Список обработанных и отфильтрованных отзывов
+    """
     stopwords = {
         "в", "на", "по", "с", "за", "для", "и", "к", "от", "о", "об", "до", "через",
         "под", "над", "у", "при", "из", "между", "а", "но", "или", "то",
@@ -69,31 +122,3 @@ def preprocess_reviews(data, url):
         print(f"Tokens before: {tokens_before}\t After: {tokens_after}")
     print(f"All tokens before: {cnt_b}\t After: {cnt_af}\t Percentage: {cnt_af/cnt_b}")
     return processed_data
-
-
-
-# ds = r'dataset\review_dataset.json'
-
-# with open(ds, 'r', encoding='utf-8') as file:
-#     ds_reviews = json.load(file)
-#     # print(ds_reviews)
-# # all_reviews = [item["review"] for item in ds_reviews]
-
-# worker_id = 6135
-# api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"  # Укажите ваш API URL
-
-# s = time.time()
-# reviews = get_reviews(ds_reviews, worker_id)
-# preprocessed = preprocess_reviews(reviews, api_url)
-# print(preprocessed)
-# e = time.time()
-
-# print(f"\nExecution time: {e-s:.2f} sec")
-
-
-
-# text = "[ИМЯ] -- это искреннее уважение и признательность за профессионализм.\n\nЭкспертиза в области управления доступами действительно высочайшего уровня, что неоднократно подтверждалось успешным решением сложнейших задач. Его подход к делу внушает уверенность в том, что вопросы информационной безопасности нашей компании находятся под надежной защитой.\n\nОтдельно хочу отметить доброжелательное отношение к коллегам и готовность всегда прийти на помощь, несмотря на плотный график и высокую занятость. Такое сочетание профессионализма и человечности делает работу с [ИМЯ] не только продуктивной, но и приятной.\n\nСотрудничество с ним даёт чувство уверенности, так что я убеждён, что под его руководством наша информационная безопасность будет только крепнуть."
-
-# print(text)
-# text = clean_text(text)
-# print(text)

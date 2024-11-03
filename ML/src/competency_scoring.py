@@ -26,12 +26,12 @@ def evaluate_competencies(reviews: List[str], api_url: str) -> Dict[str, Dict[st
     """
     Оценивает компетенции по отзывам и возвращает оценки и объяснения.
 
-    Args:
+    Аргументы:
         reviews (List[str]): Список отзывов для пользователя.
         worker_id (int): ID пользователя.
         api_url (str): URL для API запроса.
 
-    Returns:
+    Возвращает:
         Dict[str, Dict[str, str]]: Оценки и объяснения для каждой компетенции.
     """
     # Объединяем отзывы в один текст для запроса
@@ -69,20 +69,3 @@ def evaluate_competencies(reviews: List[str], api_url: str) -> Dict[str, Dict[st
 
     response = get_response(api_url, data, headers)
     return ast.literal_eval(response)
-
-
-# Пример использования функции
-
-# api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
-# # api_url = "https://vk-scoreworker-case-backup.olymp.innopolis.university/generate"
-
-# worker_id = 6135
-
-
-# s = time.time()
-# reviews = get_reviews(worker_id)
-# competency_evaluation = evaluate_competencies(reviews, api_url)
-# print(competency_evaluation)
-# e = time.time()
-
-# print(f"\nExecution time: {e-s:.2f} sec")

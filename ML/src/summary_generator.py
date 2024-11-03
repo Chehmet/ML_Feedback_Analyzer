@@ -17,7 +17,6 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
     Returns:
         str: Краткое summary на 1-3 предложения.
     """
-    # Объединяем отзывы в один текст для запроса
     reviews_text = " ".join(reviews)
 
     # Подготавливаем prompt для генерации краткого summary
@@ -42,19 +41,3 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
     }
 
     return get_response(api_url, data, headers)
-
-
-# Пример использования функции
-
-# api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"
-
-# worker_id = 6135
-
-
-# s = time.time()
-# reviews = get_reviews(worker_id)
-# summary = generate_summary(reviews, api_url)
-# print(summary)
-# e = time.time()
-
-# print(f"\nExecution time: {e-s:.2f} sec")
