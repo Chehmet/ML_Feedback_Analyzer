@@ -43,6 +43,7 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
 
     # Make the API request
     response = requests.post(api_url, data=json.dumps(data), headers=headers)
+    
     if response.status_code == 200:
         return response.text
     else:
