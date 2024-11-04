@@ -1,22 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provide Feedback</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap"
+        rel="stylesheet">
+
     <style>
+        :root {
+            --font-family-rethink-sans: 'Nunito', sans-serif;
+            --primary-color: #0077FF;
+            --background-color: #f5f7f9;
+            --text-color: #000000;
+            --chip-update-bg: #000000;
+            --chip-update-text: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Rethink Sans;
-            background-color: #f5f7f9;
+            font-family: var(--font-family-rethink-sans);
+            background-color: var(--background-color);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            z-index: 1000; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--background-color);
+            border-bottom: 1.5px solid #E0E0E0;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        .button {
+            font-family: var(--font-family-rethink-sans);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--text-color);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 0.85rem;
+        }
+
         .container {
             text-align: center;
             background-color: #fff;
@@ -25,77 +85,102 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 350px;
         }
+
         h1 {
+            font-family: var(--font-family-rethink-sans);
             font-size: 32px;
             color: #000000;
             margin-bottom: 20px;
         }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
         }
+
         label {
+            font-family: var(--font-family-rethink-sans);
             font-size: 14px;
+            font-weight: 400;
             color: #000000;
             display: block;
             margin-bottom: 5px;
         }
-        .form-input, .form-textarea {
+
+        .form-input,
+        .form-textarea {
+            font-family: var(--font-family-rethink-sans);
             width: 100%;
             padding: 10px;
-            border-radius: 25px;
+            border-radius: 10px;
             border: 1px solid #ddd;
             outline: none;
             font-size: 16px;
             box-sizing: border-box;
         }
+
         .form-textarea {
+            font-family: var(--font-family-rethink-sans);
             border-radius: 10px;
             resize: vertical;
             height: 100px;
             padding: 10px;
         }
-        .form-input::placeholder, .form-textarea::placeholder {
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
             color: #aaa;
         }
+
         .submit-button {
+            font-family: var(--font-family-rethink-sans);
             width: 100%;
             padding: 10px;
-            border-radius: 25px;
-            background-color: #0077FF;
+            border-radius: 15px;
+            background-color: var(--primary-color);
             border: none;
             color: white;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .submit-button:hover {
-            background-color: #0077FF;
+            background-color: #0056b3;
+            /* Darker shade for hover effect */
         }
     </style>
 </head>
-<body>
 
-<div class="container">
-    <h1>Provide Feedback</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_from">Your ID:</label>
-            <input type="text" id="id_from" name="id_from" class="form-input" placeholder="Enter your ID" required>
+<body>
+    <header class="header">
+        <p class="logo" onclick="window.location.href='{% url 'login' %}'">ScoreWorker</p>
+        <div class="button-container">
+            <p class="button search-button" onclick="window.location.href='{% url 'main_page' %}'">Поиск</p>
+            <p class="button feedback-button" onclick="window.location.href='{% url 'feedback_form' %}'">Отзыв</p>
         </div>
-        <div class="form-group">
-            <label for="id_to">Employee ID to Provide Feedback:</label>
-            <input type="text" id="id_to" name="id_to" class="form-input" placeholder="Enter Employee ID" required>
-        </div>
-        <div class="form-group">
-            <label for="feedback_text">Feedback:</label>
-            <textarea id="feedback_text" name="feedback_text" class="form-textarea" placeholder="Write your feedback here..." required></textarea>
-        </div>
-        <button type="submit" class="submit-button">Submit Feedback</button>
-    </form>
-</div>
+    </header>
+    <div class="container">
+        <h1>Напишите отзыв</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_from">Ваш ID</label>
+                <input type="text" id="id_from" name="id_from" class="form-input" placeholder="Введите ваш ID" required>
+            </div>
+            <div class="form-group">
+                <label for="id_to">ID сотрудника для фидбека</label>
+                <input type="text" id="id_to" name="id_to" class="form-input" placeholder="Введите ID сотрудника" required>
+            </div>
+            <div class="form-group">
+                <label for="feedback_text">Фидбек</label>
+                <textarea id="feedback_text" name="feedback_text" class="form-textarea"
+                    placeholder="Оцените, как работник справляется с обязанностями" required></textarea>
+            </div>
+            <button type="submit" class="submit-button">Отправить фидбек</button>
+        </form>
+    </div>
 
 </body>
-</html>
 
+</html>

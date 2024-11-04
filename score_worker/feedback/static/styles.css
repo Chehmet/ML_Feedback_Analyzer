@@ -103,19 +103,74 @@ body {
   /* Align buttons to the right */
   gap: 1rem;
   /* Control spacing between buttons */
-
     align-items: center;
 }
 
-.info-chip.download {
+/* .info-chip.download {
+
   min-width: 10vw;
   max-width: 14vw;
   background-color: var(--chip-update-bg);
   color: var(--chip-update-text);
   text-align: center;
-  /* margin-left: auto; */
   border-radius: 9px;
+} */
+
+/* .info-chip.update {
+  min-width: 10vw;
+  max-width: 14vw;
+  border: 1.5px solid var(--primary-color);
+  border-radius: 9px;
+  color: var(--primary-color);
+  text-align: center;
+} */
+
+.info-chip.download .button-text {
+  font-family: 'Nunito', sans-serif;
+  border: none;
+  outline: none;
+  /* Убирает лишнюю обводку при фокусе */
+  box-shadow: none;
+  /* Убирает тень */
+  text-decoration: none;
+  /* Убирает возможные подчеркивания */
+  background-color: transparent;
+  cursor: pointer;
 }
+
+/* Для .info-chip.update */
+.info-chip.update .button-text {
+  font-family: 'Nunito', sans-serif;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.info-chip.download,
+.info-chip.update {
+  display: inline-flex;
+  /* Равномерное позиционирование текста в центре */
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  /* Размеры кнопки */
+  cursor: pointer;
+  text-decoration: none;
+  /* Убирает подчеркивание */
+}
+
+.info-chip.download {
+
+  min-width: 10vw;
+  max-width: 14vw;
+  background-color: var(--chip-update-bg);
+  color: var(--chip-update-text);
+  text-align: center;
+  border-radius: 9px;
+} 
 
 .info-chip.update {
   min-width: 10vw;
@@ -124,7 +179,6 @@ body {
   border-radius: 9px;
   color: var(--primary-color);
   text-align: center;
-  /* margin-left: auto; */
 }
 
 .info-text {
@@ -245,16 +299,6 @@ body {
   background-color: transparent;
 }
 
-/* Skills Section */
-.chart-and-description {
-  padding-top: 2vh;
-  display: flex;
-  align-items: flex-start;
-  gap: 15vw;
-  /* Controls space between the chart and description */
-  margin-top: 1rem;
-}
-
 .skills-section {
   margin-top: 1rem;
   padding: 1rem;
@@ -272,16 +316,17 @@ body {
 }
 
 .chart-section {
-  flex: 1;
-  display: flex;
-  align-items: flex-start;
+  /* flex: 1; */
+  /* display: flex; */
+  /* align-items: flex-start; */
   gap: 2rem;
   justify-content: center;
-  background-color: white;
+  background-color: transparent;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 50vw;
+  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+  width: 100%;
+    /* max-width: 50vw; */
 }
 
 .radarChart {
@@ -289,15 +334,13 @@ body {
   height: auto;
 }
 
-
 .criteria-description {
   font-family: 'Nunito', sans-serif;
   font-size: 1.2rem;
-  /* font-weight: bold; */
   margin-top: 1rem;
   color: var(--text-color);
-  flex: 1;
-  max-width: 25vw;
+  /* flex: 1; */
+  max-width: 100%;
 }
 
 .skills-list {
@@ -306,9 +349,13 @@ body {
   padding: 0;
   /* Remove default padding */
   margin-top: 0.5rem;
+  width: 100%;
 }
 
 .skills-list li {
+  word-break: break-word;
+    /* Переносит слово на следующую строку, если оно не помещается */
+    overflow-wrap: break-word;
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -330,13 +377,6 @@ body {
   /* Use primary color for bullet */
   font-weight: bold;
   margin-right: 0.5rem;
-}
-
-.criteria-description {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  color: var(--text-color);
 }
 
 .feedback-list {

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Employee, Rating, Summary, SoftSkill, HardSkill, Feedback
+from .models import Employee, Rating, Summary, SoftSkill, HardSkill, Feedback, Reason
 from django.contrib.auth.hashers import check_password
 import json
 
@@ -48,16 +48,23 @@ def employee_detail(request, employee_id):
     soft_skills = SoftSkill.objects.filter(employee=employee)
     hard_skills = HardSkill.objects.filter(employee=employee)
     soft_skills_data = [skill.num for skill in soft_skills]
+    soft_skills_names = [skill.skill_name for skill in soft_skills]
     feedback_list = Feedback.objects.filter(employee=employee)
-    
+    reason = Reason.objects.filter(employee=employee)
+    reason_list = [r.reason_text for r in reason]
+    print(reason_list)
+
+    reasons_with_skills = [f"{soft_skills_names[i]}: {reason_list[i]}" for i in range(len(soft_skills_names))]
 
     return render(request, 'index.html', {
         'employee': employee,
         'summary': summary,
         'rating': rating.average_rating if rating else None,
-        'soft_skills': soft_skills_data,
+        'reasons_with_skills': reasons_with_skills,
+        'soft_skills_data': soft_skills_data,
         'hard_skills': hard_skills, 
         'feedback_list': feedback_list,
+        'reason': reason,
     })
 
 def feedback_form(request):
