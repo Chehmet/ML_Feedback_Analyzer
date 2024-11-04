@@ -5,6 +5,9 @@ import requests
 import json
 import time
 from utils import *
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def get_self_reviews(worker_id):
@@ -18,16 +21,14 @@ def get_self_reviews(worker_id):
     Возвращает:
     list: Список отзывов, написанных сотрудником
     """
-    self_reviews = get_all_reviews()
-    
     return [
         item['review']
-        for item in ds_reviews
+        for item in get_all_reviews()
         if item['ID_under_review'] == worker_id
     ]
 
 
-def analyze_self_review(api_url, summary, worker_id) -> str:
+def analyze_self_review(summary, worker_id) -> str:
     """
     Анализирует стиль написания отзывов сотрудника и его самооценку.
 
@@ -44,7 +45,12 @@ def analyze_self_review(api_url, summary, worker_id) -> str:
     Возвращает:
     str: Анализ стиля написания отзывов и самооценки сотрудника
     """
-    self_reviews = " ".join(get_self_reviews(worker_id))
+    api_url = os.getenv("API_URL")
+    self_reviews = get_self_reviews(worker_id)
+    if not self_reviews:
+        return None
+    
+    self_reviews = " ".join(self_reviews)
     
     prompt = f"""
     Проанализируй отзывы, написанные сотрудником: {self_reviews} и описание сотрудника: {summary}. 

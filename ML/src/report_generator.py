@@ -29,7 +29,7 @@ def get_self_feedback(summary, worker_id):
     Возвращает:
     str: Анализ самооценки сотрудника
     """
-    self_feedback = analyze_self_review(api, summary, worker_id)
+    self_feedback = analyze_self_review(summary, worker_id)
     return self_feedback
 
 def get_written_by_person(worker_id):
@@ -62,7 +62,15 @@ def get_summary(worker_id, reviews=None):
     """
     if not reviews:
         reviews = get_list_useful_reviews(worker_id)
-    return generate_summary(reviews, api)
+
+    summary = generate_summary(reviews, api)
+    final_summary = summary
+    final_summary += "\n\n" + get_written_by_person(worker_id)
+    
+    self_feedback = get_self_feedback(summary, worker_id)
+    if get_self_feedback:
+        final_summary += "\n\n" + self_feedback
+    return final_summary
 
 
 def get_competencies(worker_id, reviews=None):
@@ -111,7 +119,7 @@ def calculate_score(competencies):
     for competency in competencies:
         if competency['score']:
             total_score += competency['score']
-    return total_score / len(competencies)
+    return round(total_score / len(competencies), 2)
 
 
 def get_report(worker_id, reviews=None):
