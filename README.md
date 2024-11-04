@@ -47,7 +47,7 @@
 
 - **Бэкенд**: Django, Python, SQLite
 - **Фронтенд**: HTML, CSS, JavaScript
-- **Продвинутые техники больших языковых моделей**: PyTorch, LLM API (llama70B), bart-large-mnli и zero-shot классификаторы, prompt-engineering, embedder (multilingual-e5-large)
+- **Продвинутые техники больших языковых моделей**: PyTorch, LLM API (llama70B), bart-large-mnli и zero-shot классификаторы, prompt-engineering, embedder (Оценка сотрудника на основе отзывов коллег)
 - **Обработка данных**: Python, NLP, transformers (paraphrase-multilingual-MiniLM-L12-v2), кластеризация (KMeans)
 - **Дизайн**: Figma
 

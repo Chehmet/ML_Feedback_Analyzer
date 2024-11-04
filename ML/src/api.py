@@ -28,7 +28,7 @@ class WorkerDataResponse(BaseModel):
     hard_skills: List[str]
     score: float
     summary: str
-    useful_reports: List[UsefulReport]
+    useful_reviews: List[UsefulReport]
     worker_id: int
 
 
