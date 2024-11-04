@@ -114,11 +114,22 @@
    ```bash
    pip install -r requirements.txt
    ```
-3. **Запустите сервер Django**:
+3.  **Запуск ML-сервера**:
+   ```bash
+   uvicorn ml.src.api:app --reload --port 8001
+   ```
+4. **Подготовка frontend и backend серверов**:
+   ```bash
+   cd score_worker
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+5. **Запустите сервер Django**:
    ```bash
    python manage.py runserver
+   python manage.py import_employee_data
    ```
-4. **Откройте панель управления**: Перейдите по адресу `http://localhost:8000`, чтобы получить доступ к интерфейсу.
+6. **Откройте панель управления**: Перейдите по адресу `http://localhost:8000`, чтобы получить доступ к интерфейсу.
 
 ---
 
