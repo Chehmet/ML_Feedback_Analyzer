@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.conf import settings
 import requests
-from feedback.models import Employee, Feedback, Rating, Summary, SoftSkill, HardSkill
+from feedback.models import Employee, Feedback, Rating, Summary, SoftSkill, HardSkill, Reason
 
 class Command(BaseCommand):
     help = "Fetch worker data from ML API and save to database"
@@ -42,6 +42,10 @@ class Command(BaseCommand):
                         skill_name=skill["competency"],
                         num=skill["score"],
                     )
+                    Reason.objects.update_or_create(
+                        employee=employee,
+                        reason_text=skill["reason"]
+                    )
 
                 # Save HardSkills
                 for hard_skill in data["hard_skills"]:
@@ -51,7 +55,7 @@ class Command(BaseCommand):
                     )
 
                 # Save Feedbacks
-                for report in data["useful_reports"]:
+                for report in data["useful_reviews"]:
                     Feedback.objects.create(
                         employee=employee,
                         employeeTo=report["ID_under_review"],

@@ -30,7 +30,9 @@ class HardSkill(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='hard_skills')
     skill_name = models.CharField(max_length=50)
 
-
+class Reason(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='reason')
+    reason_text = models.TextField()
 
 
 
