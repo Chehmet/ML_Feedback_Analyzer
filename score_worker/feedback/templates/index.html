@@ -112,26 +112,26 @@
         </section> -->
         <section class="skills-section">
           <h2 class="skills-title">Soft Skills</h2>
-          <div class="chart-and-description">
-            <!-- Chart -->
+          <!-- <div class="chart-and-description"> -->
+            
             <section class="chart-section">
               <canvas id="myRadarChart" class="radarChart"></canvas>
             </section>
-            <!-- Criteria Description -->
+            
             <div class="criteria-description">
-              <h3>Описание критериев</h3>
+              <h3>Обоснование критериев</h3>
               <section class="skills-list">
-                {% if reason %}
+                {% if reasons_with_skills %}
                 <ul>
-                  {% for reason in skills-list %}
-                  <li>{{ reason.reason_text }}</li>
+                  {% for item in reasons_with_skills %}
+                  <li>{{ item }}</li>
                   {% endfor %}
                 </ul>
                 {% else %}
                 <p>Информации из отзывов недостаточно для формирования списка критериев</p>
                 {% endif %}
               </section>
-            </div>
+            <!-- </div> -->
           </div>
         </section>
 
@@ -170,7 +170,7 @@
       </section>
     </div>
     <script>
-      const skills = {{ soft_skills }};
+      const skills = {{ soft_skills_data }};
       const ctx = document.getElementById('myRadarChart').getContext('2d');
       const myRadarChart = new Chart(ctx, {
         type: 'radar',
