@@ -66,7 +66,7 @@ def analyze_review_style(api_url, worker_id) -> str:
         "prompt": [prompt],
         "apply_chat_template": True,
         "system_prompt": "Ты опытный психолог.",
-        "max_tokens": 150,
+        "max_tokens": 4096,
         "n": 1,
         "temperature": 0.2
     }

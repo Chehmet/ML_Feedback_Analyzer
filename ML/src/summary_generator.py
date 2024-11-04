@@ -30,7 +30,7 @@ def generate_summary(reviews: List[str], api_url: str) -> str:
         "prompt": [prompt],
         "apply_chat_template": True,
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию для краткого резюме.",
-        "max_tokens": 200,
+        "max_tokens": 4096,
         "n": 1,
         # "top_k": 15,
         "temperature": 0.2,

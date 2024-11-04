@@ -8,10 +8,10 @@ from dotenv import load_dotenv
 import os
 import re
 
-# from .ranking_reviews import retrieve_clustered_reviews
-# from .preprocessing import clean_text
-from ranking_reviews import retrieve_clustered_reviews
-from preprocessing import clean_text
+from .ranking_reviews import retrieve_clustered_reviews
+from .preprocessing import clean_text
+# from ranking_reviews import retrieve_clustered_reviews
+# from preprocessing import clean_text
 
 load_dotenv()
 

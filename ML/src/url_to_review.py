@@ -1,9 +1,9 @@
 import hashlib
 import json
 import os
-from utils import *
-from competency_scoring import *
-from preprocessing import clean_text
+from .utils import *
+from .competency_scoring import *
+from .preprocessing import clean_text
 from dotenv import load_dotenv
 
 

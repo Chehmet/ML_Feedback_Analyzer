@@ -10,8 +10,8 @@ import os
 from sklearn.cluster import KMeans
 from sentence_transformers import SentenceTransformer
 
-# from .preprocessing import clean_text
-from preprocessing import clean_text
+from .preprocessing import clean_text
+# from preprocessing import clean_text
 
 # Настройка устройства для вычислений
 device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")

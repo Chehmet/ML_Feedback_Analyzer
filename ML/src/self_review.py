@@ -4,7 +4,7 @@
 import requests
 import json
 import time
-from utils import *
+from .utils import *
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,6 +25,7 @@ def get_self_reviews(worker_id):
         item['review']
         for item in get_all_reviews()
         if item['ID_under_review'] == worker_id
+        and item['ID_reviewer'] == worker_id
     ]
 
 
@@ -61,8 +62,8 @@ def analyze_self_review(summary, worker_id) -> str:
     data = {
         "prompt": [prompt],
         "apply_chat_template": True,
-        "system_prompt": "Ты опытный психолог, который анализирует самооценку сотрудника. ",
-        "max_tokens": 200,
+        "system_prompt": "Ты опытный психолог, который анализирует самооценку сотрудника.",
+        "max_tokens": 4096,
         "n": 1,
         "temperature": 0.2
     }

@@ -5,8 +5,8 @@ import re
 import json
 import time
 
-# from .utils import *
-from utils import *
+from .utils import *
+# from utils import *
 
 
 def remove_non_utf8(text):

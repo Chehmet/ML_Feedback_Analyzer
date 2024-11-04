@@ -5,8 +5,8 @@ import json
 from typing import List, Dict
 import time
 
-# from .utils import *
-from utils import *
+from .utils import *
+# from utils import *
 
 
 def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
@@ -42,7 +42,7 @@ def extract_hard_skills(reviews: List[str], api_url: str) -> List[str]:
         "prompt": [prompt],
         "apply_chat_template": False,  # True
         "system_prompt": "Ты профессионально анализируешь отзывы и извлекаешь только важную информацию о ключевых навыках сотрудника.",
-        "max_tokens": 100,
+        "max_tokens": 4096,
         "n": 1,
         "temperature": 0.2,
         # "top_k": 15,
