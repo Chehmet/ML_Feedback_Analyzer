@@ -68,7 +68,7 @@ def get_summary(worker_id, reviews=None):
     final_summary += "\n\n" + get_written_by_person(worker_id)
     
     self_feedback = get_self_feedback(summary, worker_id)
-    if get_self_feedback:
+    if self_feedback:
         final_summary += "\n\n" + self_feedback
     return final_summary
 
