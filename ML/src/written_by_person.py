@@ -1,22 +1,57 @@
-# Here we have information about how person writes reviews to others,
-# if all of them are negative, or all of them are too positive
+"""
+Модуль для анализа стиля написания отзывов сотрудником.
+"""
 import requests
 import json
 import time
-# from utils import *
+from utils import *
 
 
-def get_reviews_written_by_person(ds_reviews, worker_id):
+def get_reviews_written_by_person(worker_id):
+    """
+    Извлекает отзывы, написанные конкретным сотрудником о других сотрудниках.
+
+    Эта функция использует вспомогательную функцию get_all_reviews() из модуля utils
+    для получения всех отзывов, а затем фильтрует их, оставляя только те, которые
+    написаны указанным сотрудником о других сотрудниках.
+
+    Аргументы:
+    worker_id (int): ID сотрудника, чьи отзывы нужно извлечь
+
+    Возвращает:
+    list: Список отзывов, написанных указанным сотрудником
+    """
+    ds_reviews = get_all_reviews()
+
     return [
         item['review']
         for item in ds_reviews
         if item['ID_reviewer'] == worker_id and not item['ID_under_review'] == worker_id
     ]
 
-def analyze_review_style(api_url, reviews, worker_id) -> str:
+def analyze_review_style(api_url, worker_id) -> str:
+    """
+    Анализирует стиль и тон отзывов, написанных сотрудником.
+
+    Эта функция:
+    1. Получает отзывы, написанные сотрудником, используя get_reviews_written_by_person
+    2. Объединяет все отзывы в единый текст
+    3. Формирует запрос к API для анализа тона и стиля отзывов
+    4. Отправляет запрос и обрабатывает ответ
+
+    Функция определяет, являются ли отзывы преимущественно положительными, 
+    отрицательными или сбалансированными.
+
+    Аргументы:
+    api_url (str): URL API для обработки текста
+    worker_id (int): ID сотрудника
+
+    Возвращает:
+    str: Анализ стиля написания отзывов сотрудником или сообщение об ошибке
+    """
+    reviews = get_reviews_written_by_person(worker_id)
     reviews_text = " ".join(reviews)
     
-    # Construct the prompt to analyze the tone of reviews
     prompt = f"""
     Пронализируй следующие отзывы: "{reviews_text}". 
     Определи, имеют ли они в основном положительный, отрицательный или сбалансированный тон. 
@@ -27,12 +62,11 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
     Не используй '\n' и другие знаки в ответе.
     """
 
-    # Set up the data for API request
     data = {
         "prompt": [prompt],
         "apply_chat_template": True,
         "system_prompt": "Ты опытный психолог.",
-        "max_tokens": 150,
+        "max_tokens": 4096,
         "n": 1,
         "temperature": 0.2
     }
@@ -41,7 +75,6 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
         "Content-Type": "application/json"
     }
 
-    # Make the API request
     response = requests.post(api_url, data=json.dumps(data), headers=headers)
     
     if response.status_code == 200:
@@ -50,21 +83,3 @@ def analyze_review_style(api_url, reviews, worker_id) -> str:
         error_message = f"Error: {response.status_code} - {response.text}"
         print(error_message)
         return error_message
-
-# Example usage of the function
-api_url = "https://vk-scoreworker-case.olymp.innopolis.university/generate"  # Replace with actual API URL
-worker_id = 28
-ds = r'dataset\review_dataset.json'
-# ds = '../dataset/sample_reviews.json'
-
-with open(ds, 'r', encoding='utf-8') as file:
-    ds_reviews = json.load(file)
-
-s = time.time()
-reviews = get_reviews_written_by_person(ds_reviews, worker_id)
-
-writer_style = analyze_review_style(api_url, reviews, worker_id)
-
-print(writer_style)
-e = time.time()
-print(f"\nExecution time: {e-s:.2f} sec")
