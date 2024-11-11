@@ -1,3 +1,6 @@
+"""
+Модуль для генерации summary на основе отзывов.
+"""
 import json
 from typing import List, Dict
 import time
